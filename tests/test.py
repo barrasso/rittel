@@ -48,7 +48,7 @@ async def close_help(pg):
     if await pg.is_visible("#helpModal.open"): await pg.click("#helpModal .btn.seal")
 
 async def solve(pg, text):
-    await pg.click("#solveBtn"); await pg.wait_for_selector("#solveModal.open")
+    await pg.click("#solveBtn"); await pg.wait_for_selector("#kb.scribe")
     await pg.fill("#solveInput", text); await pg.press("#solveInput", "Enter"); await pg.wait_for_timeout(250)
 
 async def hidden_frac(pg):
@@ -102,20 +102,22 @@ async def main():
         assert (await pg.evaluate("__rittel.round()"))["status"] == "won" and "Gauntlet" in await pg.inner_text("#solveBtn")
         ok(f"daily win ({ans}, {r['points']} pts), state survives refresh, share text, one game per day")
 
-        # ---- daily: loss + wrong solve costs 2 + vowel lock ----
+        # ---- daily: loss + wrong solve costs 2 + vowels are free when right ----
         await pg.goto(f"{URL}?day=301"); await pg.wait_for_timeout(300); await close_help(pg)
         ans = await pg.evaluate("__rittel.answer()")
         await solve(pg, "definitely wrong"); assert await pg.evaluate("__rittel.lives()") == 4, "wrong solve = -2"
         w = wrong_consonants(ans)
         for c in w[:3]: await pg.keyboard.press(c); await pg.wait_for_timeout(120)
         assert await pg.evaluate("__rittel.lives()") == 1
-        await pg.keyboard.press("A"); await pg.wait_for_timeout(100)
-        assert "A" not in (await pg.evaluate("__rittel.round()"))["guessed"], "vowel blocked on last life"
+        vow = next(v for v in "AEIOU" if v in ans)
+        await pg.keyboard.press(vow); await pg.wait_for_timeout(150)
+        rr = await pg.evaluate("__rittel.round()")
+        assert vow in rr["guessed"] and rr["history"][-1] == "H" and await pg.evaluate("__rittel.lives()") == 1, "correct vowel is free, even on the last life"
         await pg.keyboard.press(w[3]); await pg.wait_for_selector("#statsModal.open", timeout=8000)
         assert (await pg.evaluate("__rittel.round()"))["status"] == "lost"
         st = await pg.evaluate("JSON.parse(localStorage.getItem('rittel-dev:stats'))")
         assert st["played"] == 2 and st["wins"] == 1 and st["losses"] == 1 and st["streak"] == 0, st
-        ok("daily loss: wrong solve costs 2, misses cost 1, no vowel on last life, stats updated")
+        ok("daily loss: wrong solve costs 2, any miss costs 1, a correct vowel is free (even on the last life), stats updated")
 
         # ---- gauntlet run ----
         await pg.click("#statsModal .close"); await pg.click("#tabGauntlet"); await pg.wait_for_timeout(200)
@@ -179,6 +181,69 @@ async def main():
         assert nxt != daily_id and len(await pg.evaluate("JSON.parse(localStorage.getItem('rittel-dev:seenRiddles'))")) == 1, "pool reset after exhaustion"
         ok("no repeats until the bank is exhausted, then the pool resets; today's daily never appears in the Gauntlet")
 
+        # ---- regression: solve keyboard (bug: "tried to solve CHAMELEON but the O was grayed out") ----
+        mctx = await b.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=2, has_touch=True, is_mobile=True)
+        mp = await mctx.new_page(); hook(mp)
+        await mp.goto(f"{URL}?day=1&reset=1"); await close_help(mp)
+        cday = await mp.evaluate("(()=>{for(let d=1;d<4000;d++) if(__rittel.dailyRiddleId(d)==='CHAMELEON') return d;})()")
+        async def tap_word(page, word):
+            for ch in word:
+                await page.tap("#spaceBtn" if ch == " " else f'.key[data-k="{ch}"]'); await page.wait_for_timeout(40)
+        async def key_state(page):
+            return await page.evaluate("[...document.querySelectorAll('.row:not(.actions) .key')].map(k=>({k:k.dataset.k,dis:k.disabled,cls:k.className}))")
+        # Daily on a phone: reveal C H M, miss Z Q X J K → last life with O, A, E unguessed
+        await mp.goto(f"{URL}?day={cday}&reset=1"); await close_help(mp)
+        for ch in "CHMZQXJK": await mp.tap(f'.key[data-k="{ch}"]'); await mp.wait_for_timeout(80)
+        assert await mp.evaluate("__rittel.lives()") == 1
+        ks = {k["k"]: k for k in await key_state(mp)}
+        assert ks["Z"]["dis"] and "miss" in ks["Z"]["cls"] and ks["C"]["dis"] and not ks["O"]["dis"], "guess keyboard state"
+        await mp.tap("#solveBtn"); await mp.wait_for_selector("#kb.scribe")
+        ks = await key_state(mp)
+        assert len(ks) == 26 and all(not k["dis"] and "miss" not in k["cls"] and "hit" not in k["cls"] for k in ks), "scribe: all 26 letters enabled"
+        assert await mp.is_visible("#cancelBtn") and await mp.is_visible("#submitBtn") and await mp.is_visible("#bkspBtn") and await mp.is_visible("#spaceBtn")
+        assert not await mp.is_visible("#solveBtn")
+        await tap_word(mp, "CHAMELEZ"); await mp.tap("#bkspBtn"); await tap_word(mp, "ON")   # missed Z typed + erased; vowels + revealed letters typed
+        assert await mp.input_value("#solveInput") == "CHAMELEON" and "9/9" in await mp.inner_text("#solveHint")
+        assert await mp.evaluate("__rittel.lives()") == 1, "typing in scribe mode never costs lives or guesses"
+        await mp.screenshot(path=str(ROOT / "docs" / "solve-mode.png"))
+        await mp.tap("#submitBtn"); await mp.wait_for_timeout(400)
+        rr = await mp.evaluate("__rittel.round()")
+        assert rr["status"] == "won" and rr["history"][-1] == "S", rr
+        ok("regression (Daily, phone): last life, solve CHAMELEON on the scribe keys incl. revealed C/H/M, vowels A/E/O and a typed+erased missed Z")
+        # Gauntlet on a phone, CHAMELEON forced via the seen pool
+        ids = await mp.evaluate("__rittel.bank.map(r=>r.id)")
+        await mp.goto(f"{URL}?day=1&reset=1"); await close_help(mp)
+        await mp.evaluate(f"localStorage.setItem('rittel-dev:seenRiddles', JSON.stringify({[i for i in ids if i != 'CHAMELEON']!r}))")
+        await mp.tap("#tabGauntlet"); await mp.tap("#startRun"); await mp.wait_for_timeout(200)
+        assert await mp.evaluate("__rittel.answer()") == "CHAMELEON"
+        for ch in "ZQXJK": await mp.tap(f'.key[data-k="{ch}"]'); await mp.wait_for_timeout(80)
+        assert await mp.evaluate("__rittel.lives()") == 1
+        await mp.tap('.key[data-k="O"]'); await mp.wait_for_timeout(200)
+        assert "O" in (await mp.evaluate("__rittel.round()"))["guessed"] and await mp.evaluate("__rittel.lives()") == 1, "vowel guessable and free on last life"
+        await mp.tap("#solveBtn"); await mp.wait_for_selector("#kb.scribe")
+        await mp.keyboard.type("cham"); assert await mp.input_value("#solveInput") == "CHAM", "hardware keys type into the solve"
+        await mp.keyboard.press("Backspace"); assert await mp.input_value("#solveInput") == "CHA"
+        await mp.keyboard.press("Escape"); await mp.wait_for_timeout(100)
+        assert not await mp.evaluate("__rittel.solving()") and await mp.is_visible("#solveBtn")
+        ks = {k["k"]: k for k in await key_state(mp)}
+        assert ks["Z"]["dis"] and "miss" in ks["Z"]["cls"] and "hit" in ks["O"]["cls"], "guess state restored after cancel"
+        await mp.tap("#solveBtn"); await mp.wait_for_selector("#kb.scribe")
+        assert await mp.input_value("#solveInput") == "", "fresh compose"
+        await mp.tap("#spaceBtn"); assert await mp.input_value("#solveInput") == "", "no leading space"
+        await tap_word(mp, "CHAMELE ON")
+        assert await mp.input_value("#solveInput") == "CHAMELE ON"
+        await mp.tap("#submitBtn"); await mp.wait_for_timeout(500)
+        run = await mp.evaluate("__rittel.run()")
+        assert run["round"]["status"] == "won" and run["lives"] == 2 and run["solved"] == 1, run
+        # the phone's own keyboard: typing into the field (as a native keyboard would) also works
+        await mp.tap("#solveBtn"); await mp.wait_for_timeout(300)   # Next riddle
+        await mp.tap("#solveBtn"); await mp.wait_for_selector("#kb.scribe")
+        await mp.tap("#solveInput"); await mp.keyboard.type("anything at all"); 
+        assert await mp.input_value("#solveInput") == "ANYTHING AT ALL", "native typing into the field"
+        await mp.tap("#cancelBtn"); assert not await mp.evaluate("__rittel.solving()")
+        ok("regression (Gauntlet, phone): free vowel on last life, hardware typing, Backspace/Escape, Cancel restores guess state, Space, native field typing")
+        await mctx.close()
+
         # ---- shop + skins + ads ----
         assert await pg.evaluate("document.getElementById('adSlot').hidden && document.getElementById('adSlot').offsetHeight===0")
         assert not await pg.evaluate("__rittel.config.ADS_ENABLED")
@@ -240,6 +305,11 @@ async def main():
         assert await d.evaluate("typeof window.__rittel") == "undefined", "test hook hidden in production"
         await close_help(d); await d.click("#tabGauntlet"); await d.click("#startRun"); await d.wait_for_timeout(200)
         await d.keyboard.press("T"); await d.wait_for_timeout(200)
+        await d.keyboard.press("Enter"); await d.wait_for_timeout(150)
+        assert await d.evaluate("document.activeElement.id") == "solveInput", "desktop: field focused for typing"
+        await d.keyboard.type("abc"); assert await d.input_value("#solveInput") == "ABC"
+        assert len((await d.evaluate("JSON.parse(localStorage.getItem('rittel:run'))"))["round"]["guessed"]) == 1, "typing a solve doesn't guess"
+        await d.keyboard.press("Escape"); assert await d.is_visible("#solveBtn")
         ok("production build loads on desktop (no dev hook exposed)")
         await b.close()
 

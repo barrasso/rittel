@@ -25,7 +25,7 @@ async def fresh(pg, q="day=300"):
     await pg.reload(); await pg.wait_for_timeout(300)
 
 async def solve(pg, text):
-    await pg.click("#solveBtn"); await pg.fill("#solveInput", text); await pg.press("#solveInput", "Enter")
+    await pg.click("#solveBtn"); await pg.wait_for_selector("#kb.scribe"); await pg.fill("#solveInput", text); await pg.press("#solveInput", "Enter")
 
 def cons(a): return [c for c in dict.fromkeys(a) if c.isalpha() and c not in "AEIOU"]
 def wrong(a): return [c for c in "ZQXJKVWYFBGHPMCDLNRST" if c not in a]
@@ -39,7 +39,7 @@ async def main():
         # daily mid-game + win
         pg = await page(b); await fresh(pg, "day=303")
         a = await pg.evaluate("__rittel.answer()")
-        for k in cons(a)[:2] + wrong(a)[:1] + ["E" if "E" in a else "O"]: await pg.keyboard.press(k); await pg.wait_for_timeout(250)
+        for k in cons(a)[:2] + wrong(a)[:1] : await pg.keyboard.press(k); await pg.wait_for_timeout(250)
         await pg.wait_for_timeout(900); await pg.screenshot(path=str(DOCS / "play.png"))
         await solve(pg, a); await pg.wait_for_selector("#statsModal.open", timeout=9000); await pg.wait_for_timeout(900)
         await pg.screenshot(path=str(DOCS / "win.png"))
@@ -69,7 +69,7 @@ async def main():
                 localStorage.setItem('rittel-dev:prefs', JSON.stringify({{mode:'gauntlet',skin:'{skin}',name:''}})); }}""")
             await pg.reload(); await pg.wait_for_timeout(300); await pg.click("#startRun"); await pg.wait_for_timeout(300)
             a = await pg.evaluate("__rittel.answer()")
-            for k in cons(a)[:2] + wrong(a)[:1] + (["A"] if "A" in a else ["O"]): await pg.keyboard.press(k); await pg.wait_for_timeout(250)
+            for k in cons(a)[:2] + wrong(a)[:1]: await pg.keyboard.press(k); await pg.wait_for_timeout(250)
             await pg.wait_for_timeout(900)
             await pg.screenshot(path=str(DOCS / ("mobile-dark.png" if scheme == "dark" else f"skin-{skin}.png")))
         # desktop

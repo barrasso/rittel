@@ -65,7 +65,6 @@ main{width:100%;max-width:560px;flex:1;display:flex;flex-direction:column;paddin
 .front{background:linear-gradient(160deg,rgba(255,255,255,.12),transparent 50%),var(--tileFront);border:1.5px solid var(--tileBorder);box-shadow:inset 0 0 8px rgba(60,35,10,.25),0 2px 3px rgba(30,15,5,.25)}
 .front::after{content:"";width:46%;height:2px;background:var(--tileLine);position:absolute;bottom:17%}
 .back{transform:rotateX(180deg);background:linear-gradient(160deg,rgba(255,255,255,.12),transparent 55%),var(--hit);color:var(--hitText);border:1.5px solid rgba(0,0,0,.35);box-shadow:inset 0 0 0 2px rgba(230,193,96,.35),0 2px 3px rgba(30,15,5,.3)}
-.tile.v .back{background:linear-gradient(135deg,var(--v1,#f0d27a),var(--v2,#c4912f) 45%,var(--v1,#f0d27a) 72%,var(--v2,#c4912f));color:var(--vowelText,#2a1806);box-shadow:inset 0 0 0 1px rgba(255,245,200,.7),0 2px 3px rgba(30,15,5,.3)}
 .tile.missed .back{background:linear-gradient(160deg,rgba(255,255,255,.1),transparent 55%),var(--bad);color:#f6e7c1}
 .tile.win .in{animation:bounce .6s ease var(--d,0s)}
 @keyframes bounce{0%,100%{transform:rotateX(180deg) translateY(0)}40%{transform:rotateX(180deg) translateY(-12px)}}
@@ -80,7 +79,7 @@ main{width:100%;max-width:560px;flex:1;display:flex;flex-direction:column;paddin
 body.starting .card,body.starting #board,body.starting .meta,body.starting #kb{display:none}
 .start .lb.mini{min-height:0;margin:0 auto 14px;max-width:300px;text-align:left}
 .start .lb.mini li{font-size:16px;padding:4px 6px}
-.key:disabled:not(.hit):not(.vhit):not(.miss):not(.wide){opacity:.55}
+.key:disabled:not(.hit):not(.miss):not(.wide){opacity:.55}
 /* points pop */
 .pop{position:fixed;left:50%;top:40%;transform:translate(-50%,-50%);z-index:30;pointer-events:none;text-align:center;opacity:0;min-width:220px;padding:16px 26px 14px;border-radius:6px;
   background:radial-gradient(ellipse at 50% 30%,rgba(70,40,15,.94),rgba(28,14,5,.94));border:1.5px solid #c9a24a;outline:1px solid rgba(201,162,74,.5);outline-offset:3px;box-shadow:0 14px 40px rgba(0,0,0,.45)}
@@ -98,13 +97,9 @@ body.starting .card,body.starting #board,body.starting .meta,body.starting #kb{d
   background:linear-gradient(180deg,rgba(255,255,255,.18),transparent 40%),repeating-linear-gradient(92deg,rgba(90,55,20,.06) 0 2px,transparent 2px 7px),linear-gradient(180deg,var(--key1),var(--key2));
   box-shadow:inset 0 1px 0 rgba(255,240,200,.35),0 3px 0 var(--keyEdge),0 4px 6px rgba(0,0,0,.25);transition:background .25s,transform .08s,box-shadow .08s,opacity .25s;margin-bottom:3px}
 .key:active{transform:translateY(2px);box-shadow:inset 0 1px 0 rgba(255,240,200,.3),0 1px 0 var(--keyEdge)}
-.key.vowel::after{content:"−1";position:absolute;top:2px;right:4px;font-size:11px;font-style:italic;color:var(--emph)}
 .key.hit{background:linear-gradient(180deg,rgba(255,255,255,.14),transparent 45%),var(--hit);color:var(--hitText);border-color:var(--hitEdge);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 3px 0 var(--hitEdge),0 4px 6px rgba(0,0,0,.25)}
-.key.vhit{background:linear-gradient(135deg,#f0d27a,#c4912f 50%,#e3be62);color:#2a1806;border-color:#7a5418;box-shadow:inset 0 1px 0 rgba(255,250,220,.6),0 3px 0 #7a5418,0 4px 6px rgba(0,0,0,.25)}
-.key.vhit::after,.key.miss::after{display:none}
 .key.miss{background:var(--keyMiss);color:var(--keyMissText);text-decoration:line-through;text-decoration-thickness:1.5px;box-shadow:inset 0 2px 4px rgba(0,0,0,.35);transform:translateY(2px);border-color:rgba(0,0,0,.3)}
 .key:disabled{cursor:default}
-.key.locked{opacity:.4}
 .actions{gap:8px}
 .wide{flex:1;max-width:none;padding:0 14px}
 .seal,#solveBtn{font-family:var(--fraktur);font-size:26px;letter-spacing:.02em;color:var(--sealText);border:1px solid var(--sealEdge);border-radius:999px;
@@ -157,10 +152,9 @@ body.starting .card,body.starting #board,body.starting .meta,body.starting #kb{d
 .foot .cd{flex:1;text-align:center}
 .foot .cd small{display:block;color:var(--muted);font-size:14px;font-variant:small-caps;letter-spacing:.08em}
 .foot .cd b{font-size:28px;font-variant-numeric:tabular-nums;color:var(--modalText)!important}
-#solveInput,#nameInput{width:100%;font-family:var(--serif);font-size:24px;letter-spacing:.08em;padding:10px 14px;border-radius:3px;border:1.5px solid var(--modalBorder);
+#nameInput{width:100%;font-family:var(--serif);font-size:24px;letter-spacing:.08em;padding:10px 14px;border-radius:3px;border:1.5px solid var(--modalBorder);
   background:color-mix(in srgb,var(--modalText) 8%,transparent);color:var(--modalText);outline:none;margin:8px 0 14px;box-shadow:inset 0 2px 5px rgba(40,20,5,.2)}
-#solveInput{text-transform:uppercase}
-#solveInput:focus,#nameInput:focus{border-color:var(--accent)}
+#nameInput:focus{border-color:var(--accent)}
 .namerow{display:flex;gap:8px;align-items:center}
 .namerow input{margin:0!important;flex:1;min-width:0;font-size:20px!important}
 .namerow .btn{width:auto;font-size:22px;padding:8px 16px}
@@ -203,3 +197,28 @@ body.starting .card,body.starting #board,body.starting .meta,body.starting #kb{d
 @media (max-height:740px){.key{height:46px}.card{padding:12px 16px}#solveBtn,#yieldBtn{height:46px}}
 @media (max-width:380px){header h1{font-size:34px}.logo{width:36px;height:36px}.icon-btn{width:36px}.tab{padding:6px 10px;font-size:15px}.key{font-size:19px}.modes{padding:8px 10px 0}}
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+
+/* ── solve mode: the scribe keyboard ── every letter is enabled while composing an answer */
+#kb:not(.scribe) .scribe-only,#kb.scribe .play-only{display:none!important}
+.compose{margin:0 4px 2px;padding:8px 10px 10px;border:1.5px solid var(--modalBorder);border-radius:4px;
+  background:radial-gradient(ellipse at 30% 0%,rgba(255,240,200,.18),transparent 60%),var(--modalBg);color:var(--modalText);box-shadow:0 6px 18px rgba(0,0,0,.25);animation:pop .2s ease}
+.compose-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px}
+.compose-top b{font-family:var(--fraktur);font-weight:400;font-size:21px;color:var(--accent)}
+.compose-top span{font-size:13px;font-style:italic;color:var(--muted);text-align:right}
+#solveInput{width:100%;font-family:var(--serif);font-size:24px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px;border-radius:3px;border:1.5px solid var(--modalBorder);
+  background:color-mix(in srgb,var(--modalText) 7%,transparent);color:var(--modalText);outline:none;box-shadow:inset 0 2px 5px rgba(40,20,5,.2);caret-color:var(--accent)}
+#solveInput:focus{border-color:var(--accent)}
+#solveInput::placeholder{color:var(--muted);opacity:.7;letter-spacing:.22em}
+#kb.scribe .row:not(.actions) .key{background:linear-gradient(180deg,rgba(255,255,255,.35),transparent 45%),var(--cardBg);color:var(--cardText);border-color:var(--tileBorder);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.35),0 3px 0 var(--tileBorder),0 4px 6px rgba(0,0,0,.2);text-decoration:none;opacity:1;transform:none}
+#kb.scribe .row:not(.actions) .key:active{transform:translateY(2px);box-shadow:0 1px 0 var(--tileBorder)}
+#kb.scribe .actions .key{height:50px;border-radius:999px;font-size:17px}
+#cancelBtn{flex:1.1;font-style:italic}
+#spaceBtn{flex:1.4;font-style:italic}
+#bkspBtn{flex:.8;font-size:22px!important}
+#submitBtn{flex:2;font-family:var(--fraktur);font-size:23px!important;color:var(--sealText);border-color:var(--sealEdge);
+  background:radial-gradient(ellipse at 30% 25%,rgba(255,190,160,.4),transparent 45%),radial-gradient(ellipse at 50% 60%,var(--seal1),var(--seal2) 65%,var(--seal3));
+  box-shadow:inset 0 -4px 8px rgba(0,0,0,.35),0 3px 0 var(--sealEdge),0 5px 10px rgba(0,0,0,.3);text-shadow:0 -1px 0 rgba(0,0,0,.45)}
+body.solving #msg{visibility:hidden}
+body.solving .card{opacity:.92}
+@media (max-height:740px){body.solving #board{max-height:150px}.compose{padding:6px 8px 8px}#solveInput{font-size:21px;padding:5px 10px}}

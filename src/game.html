@@ -46,7 +46,12 @@
     <button class="btn seal" id="startRun">Enter the Gauntlet</button>
   </section>
 </main>
-<div id="kb"></div>
+<div id="kb">
+  <form class="compose" id="solveForm" autocomplete="off" hidden>
+    <div class="compose-top"><b>Speak thy answer</b><span id="solveHint"></span></div>
+    <input id="solveInput" type="text" autocapitalize="characters" autocomplete="off" autocorrect="off" spellcheck="false" maxlength="40" enterkeyhint="done" aria-label="Your answer">
+  </form>
+</div>
 <div id="adSlot" class="ad-slot" hidden aria-hidden="true"></div>
 
 <div class="overlay" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
@@ -55,9 +60,8 @@
     <h2 id="helpTitle">Hear ye, hear ye</h2>
     <p>The court jester poses riddles. Reveal each answer letter by letter, then solve it before thy lives run out.</p>
     <ul>
-      <li><b>Consonants</b> are free if they're in the answer. A wrong consonant costs <b>1 life</b>.</li>
-      <li><b>Vowels</b> (A E I O U) always cost <b>1 life</b>, right or wrong. You can't buy one with your last life.</li>
-      <li><b>Solve</b> at any time. A wrong solve costs <b>2 lives</b>, so guess with care.</li>
+      <li>Guess any letter. If it's in the answer it's <b>free</b> and every copy flips over. A wrong letter costs <b>1 life</b>.</li>
+      <li>Press <b>Solve</b> at any time and spell the whole answer on the scribe's keyboard. Every letter can be typed there. A wrong solve costs <b>2 lives</b>, so guess with care.</li>
       <li><b>Points:</b> Squire 100, Knight 200, Sage 300. You get up to <b>3×</b> that for solving while tiles are still hidden, plus 10 per life left, all multiplied by your <b>streak</b>.</li>
     </ul>
     <h3>Two ways to play</h3>
@@ -65,21 +69,9 @@
       <li><b>Daily Riddle:</b> one shared riddle a day with 6 lives. Squire on Mondays, Knight Tuesday to Thursday, Sage Friday to Sunday. Share thy result.</li>
       <li><b>The Gauntlet:</b> endless riddles with lives carried over. A solve heals 1 life and a flawless solve heals 2, up to 9. <b>Yield</b> skips a riddle for 1 life.</li>
     </ul>
-    <p class="hintline">Points become gold for the Armory: new skins and more. Your keyboard works too: type letters, press Enter to solve.</p>
+    <p class="hintline">Points become gold for the Armory: new skins and more. Your own keyboard works too: type letters to guess, press Enter to solve.</p>
     <div style="height:12px"></div>
     <button class="btn seal" data-close>Begin</button>
-  </div>
-</div>
-
-<div class="overlay" id="solveModal" role="dialog" aria-modal="true" aria-labelledby="solveTitle">
-  <div class="modal">
-    <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <h2 id="solveTitle">Speak thy answer</h2>
-    <p class="hintline" id="solveHint"></p>
-    <form id="solveForm" autocomplete="off">
-      <input id="solveInput" type="text" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="40" aria-label="Your answer">
-      <button class="btn seal" type="submit">Submit answer</button>
-    </form>
   </div>
 </div>
 

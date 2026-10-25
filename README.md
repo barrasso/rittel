@@ -8,11 +8,13 @@ The court jester poses a riddle. Its answer sits as blank tiles on an old parchm
 | --- | --- | --- |
 | ![Daily riddle mid-game](docs/play.png) | ![Gauntlet start](docs/gauntlet-start.png) | ![Points popping after a solve](docs/gauntlet.png) |
 
+![Solve mode on a phone: the scribe's keyboard, with every letter enabled](docs/solve-mode.png)
+
 ## How to play
 
-- **Consonants** are free if they're in the answer. A wrong consonant costs **1 life**.
-- **Vowels** (A E I O U) always cost **1 life**, right or wrong, and you can't buy one with your last life.
-- **Solve** at any time. A **wrong solve costs 2 lives**, so blind guessing is a real gamble.
+- **Guess any letter.** If it's in the answer it's free and every copy flips over. A wrong letter costs **1 life**. Vowels follow the same rule as consonants.
+- **Solve** at any time. The keyboard turns into the **scribe's keyboard**: every letter A–Z plus Space and ⌫ is enabled, even ones you've already guessed or missed, with clear **Cancel** and **Submit** buttons. You can also type on a hardware keyboard or tap the field for the phone's own keyboard.
+- A **wrong solve costs 2 lives**, so blind guessing is a real gamble.
 - Fill every tile or solve it to win.
 
 ## Modes
@@ -24,11 +26,11 @@ The court jester poses a riddle. Its answer sits as blank tiles on an old parchm
 
 ```
 Rittel #298 🧩 2/6
-🟩🟩⬛🟨🟩⭐
+🟩🟩⬛🟩🟩⭐
 ⚜ 790 points
 ```
 
-🟩 letter found · 🟨 vowel bought · ⬛ miss · 🟥 wrong solve · ⭐ solved
+🟩 letter found · ⬛ miss · 🟥 wrong solve · ⭐ solved
 
 ### The Gauntlet (endless)
 - Riddle after riddle. The run ends when your lives run out.

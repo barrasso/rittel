@@ -15,7 +15,6 @@ const RULES = {
   RUN_LIVES: 6,
   MAX_LIVES: 9,
   MISS_COST: 1,
-  VOWEL_COST: 1,
   WRONG_SOLVE_COST: 2,
   YIELD_COST: 1,
   SOLVE_HEAL: 1,
@@ -37,7 +36,6 @@ const ITEMS = [{id:"noads", name:"Banish the Ads", desc:"A royal decree: no bann
 // ───────────────────────── riddle bank ─────────────────────────
 const BANK = RIDDLES.map(([tier, a, q]) => ({id:a, tier, a, q}));
 const BY_ID = new Map(BANK.map(r => [r.id, r]));
-const VOWELS = new Set("AEIOU");
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function seededShuffle(arr, seed){const r=mulberry32(seed),a=arr.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
 const DAILY_ORDER = {1:[],2:[],3:[]};
@@ -206,7 +204,7 @@ function buildBoard(){
   rd.a.split(" ").forEach(w => {
     const wd = el("div", "word");
     for (const ch of w) {
-      const t = el("div", "tile" + (VOWELS.has(ch) ? " v" : ""));
+      const t = el("div", "tile");
       t.innerHTML = '<div class="in"><div class="face front"></div><div class="face back"></div></div>';
       t.querySelector(".back").textContent = ch;
       t.setAttribute("aria-label", "blank"); wd.appendChild(t); tiles.push({el:t, ch});
@@ -254,18 +252,23 @@ function buildKeyboard(){
   ROWS.forEach(r => {
     const row = el("div", "row");
     for (const ch of r) {
-      const b = el("button", "key" + (VOWELS.has(ch) ? " vowel" : ""), ch); b.dataset.k = ch;
-      b.setAttribute("aria-label", ch + (VOWELS.has(ch) ? " (vowel, costs 1 life)" : ""));
-      b.addEventListener("click", () => guess(ch)); row.appendChild(b); keyEls[ch] = b;
+      const b = el("button", "key", ch); b.type = "button"; b.dataset.k = ch;
+      b.addEventListener("click", () => solving ? typeChar(ch) : guess(ch)); row.appendChild(b); keyEls[ch] = b;
     }
     kb.appendChild(row);
   });
   const row = el("div", "row actions");
-  const y = el("button", "key wide ghostkey", "Yield"); y.id = "yieldBtn"; y.title = "Skip this riddle for 1 life";
-  y.addEventListener("click", yieldRound);
-  const s = el("button", "key wide", "Solve"); s.id = "solveBtn"; s.addEventListener("click", primaryAction);
-  row.append(y, s); kb.appendChild(row);
-  kb.appendChild(Object.assign(el("div", "legend"), {innerHTML: 'Right consonants are free · <b>vowels cost 1</b> · misses cost 1 · <b>wrong solve costs 2</b>'}));
+  const btn = (id, cls, text, fn, label) => { const b = el("button", cls, text); b.type = "button"; b.id = id; b.addEventListener("click", fn); if (label) b.setAttribute("aria-label", label); return b; };
+  row.append(
+    btn("yieldBtn", "key wide play-only", "Yield", yieldRound, "Yield: skip this riddle for 1 life"),
+    btn("solveBtn", "key wide play-only", "Solve", primaryAction),
+    btn("cancelBtn", "key wide scribe-only", "Cancel", closeSolve, "Cancel solving"),
+    btn("spaceBtn", "key wide scribe-only", "Space", () => typeChar(" "), "Space"),
+    btn("bkspBtn", "key wide scribe-only", "⌫", backspace, "Delete last letter"),
+    btn("submitBtn", "key wide scribe-only", "Submit", submitSolve, "Submit answer"));
+  kb.appendChild(row);
+  kb.appendChild(Object.assign(el("div", "legend play-only"), {innerHTML: 'Right letters are free · misses cost 1 life · <b>a wrong solve costs 2</b>'}));
+  kb.appendChild(Object.assign(el("div", "legend scribe-only"), {innerHTML: 'Scribe mode: <b>every letter</b> can be written here. Guesses are unaffected.'}));
 }
 
 // ───────────────────────── rendering ─────────────────────────
@@ -309,12 +312,15 @@ function renderLives(){
 }
 function renderKeys(){
   const r = R(), rd = riddle(); const letters = rd ? lettersOf(rd.a) : new Set();
-  const live = playing(), last = lives() <= 1;
+  const live = playing();
+  if (solving && !live) solving = false;
+  kb.classList.toggle("scribe", solving); document.body.classList.toggle("solving", solving);
+  $("solveForm").hidden = !solving;
   for (const ch in keyEls) {
     const b = keyEls[ch], g = !!r && r.guessed.includes(ch);
-    b.classList.remove("hit", "vhit", "miss", "locked");
-    if (g) b.classList.add(letters.has(ch) ? (VOWELS.has(ch) ? "vhit" : "hit") : "miss");
-    if (!g && VOWELS.has(ch) && last && live) b.classList.add("locked");
+    b.classList.remove("hit", "miss");
+    if (solving) { b.disabled = false; b.removeAttribute("aria-pressed"); continue; }   // scribe: every letter enabled
+    if (g) b.classList.add(letters.has(ch) ? "hit" : "miss");
     b.disabled = g || !live;
   }
   const s = $("solveBtn"), y = $("yieldBtn");
@@ -337,14 +343,12 @@ function primaryAction(){
 function guess(ch){
   if (!playing()) return;
   const r = R(), rd = riddle(); if (r.guessed.includes(ch)) return;
-  const isV = VOWELS.has(ch), hit = lettersOf(rd.a).has(ch);
-  if (isV && lives() <= 1) { toast("Last life: thou canst not buy a vowel now"); shake(); return; }
+  const hit = lettersOf(rd.a).has(ch);
   r.guessed.push(ch);
-  if (isV) { spend(RULES.VOWEL_COST); r.history.push(hit ? "V" : "X"); }
-  else if (!hit) { spend(RULES.MISS_COST); r.history.push("X"); }
+  if (!hit) { spend(RULES.MISS_COST); r.history.push("X"); }
   else r.history.push("H");
   const count = tiles.filter(t => t.ch === ch).length;
-  if (hit) setMsg(count + " × " + ch + (isV ? " (bought, −1 life)" : ""));
+  if (hit) setMsg(count + " × " + ch);
   else { setMsg("No " + ch + " (−1 life)"); shake(); }
   const delay = hit ? revealTiles(true, ch) : 0;
   afterMove(delay);
@@ -450,6 +454,7 @@ function nextRiddle(){
 }
 function setMode(m){
   if (m === mode) return;
+  solving = false;
   mode = m; prefs.mode = m; save(); closeAll(); setMsg(""); render();
   if (m === "gauntlet" && run && run.over) setTimeout(openRunEnd, 50);
 }
@@ -483,7 +488,7 @@ function countUp(node, from, to, ms){
 }
 
 // ───────────────────────── modals ─────────────────────────
-function open(id){ $(id).classList.add("open"); }
+function open(id){ closeSolve(); $(id).classList.add("open"); }
 function close(id){
   $(id).classList.remove("open");
   if (id === "helpModal") store.set("helpV2", true);
@@ -502,21 +507,51 @@ $("startRun").onclick = startRun;
 $("runAgain").onclick = () => { if (run && run.pendingSubmit) submitRun(prefs.name || "Wanderer"); startRun(); };
 $("toGauntlet").onclick = () => setMode("gauntlet");
 
+// Solve mode ("scribe"): the on-screen keyboard switches to an all-enabled writing keyboard, independent of
+// which letters were guessed or missed. The text field also accepts hardware and native phone keyboards.
+let solving = false;
+const solveInput = $("solveInput");
+const finePointer = window.matchMedia && matchMedia("(pointer: fine)").matches;
+function solveHintText(){
+  const rd = riddle(); if (!rd) return "";
+  const words = rd.a.split(" ").map(w => w.length), need = norm(rd.a).length, have = norm(solveInput.value).length;
+  return (words.length > 1 ? words.join(" + ") + " letters" : need + " letters") + " · " + have + "/" + need + " written · wrong costs " + RULES.WRONG_SOLVE_COST + " lives";
+}
+function updateCompose(){ $("solveHint").textContent = solveHintText(); }
 function openSolve(){
   if (!playing()) return;
-  const rd = riddle(), r = R(); const words = rd.a.split(" ").map(w => w.length);
-  $("solveHint").textContent = (words.length > 1 ? words.length + " words (" + words.join(", ") + " letters)" : words[0] + " letters") +
-    " · a wrong guess costs " + RULES.WRONG_SOLVE_COST + " lives · " + lives() + " left";
-  const inp = $("solveInput"); inp.value = "";
-  inp.placeholder = rd.a.split(" ").map(w => [...w].map(c => r.guessed.includes(c) ? c : "_").join("")).join(" ");
-  open("solveModal"); setTimeout(() => inp.focus(), 50);
+  const rd = riddle(), r = R();
+  solving = true; solveInput.value = "";
+  solveInput.placeholder = rd.a.split(" ").map(w => [...w].map(c => r.guessed.includes(c) ? c : "_").join("")).join(" ");
+  updateCompose(); render();
+  if (finePointer) solveInput.focus({preventScroll: true});   // desktop: type straight away; phones use the scribe keys (or tap the field)
 }
-$("solveForm").addEventListener("submit", e => {
-  e.preventDefault(); const v = $("solveInput").value; if (!norm(v)) { $("solveInput").focus(); return; }
-  close("solveModal"); solve(v);
+function closeSolve(){
+  if (!solving) return;
+  solving = false; solveInput.blur(); render();
+}
+function typeChar(c){
+  if (!solving) return;
+  let v = solveInput.value;
+  if (c === " " && (!v || v.endsWith(" "))) return;
+  if (v.length >= 40) return;
+  solveInput.value = v + c; updateCompose();
+}
+function backspace(){ if (solving) { solveInput.value = solveInput.value.slice(0, -1); updateCompose(); } }
+function submitSolve(){
+  if (!solving) return;
+  const v = solveInput.value;
+  if (!norm(v)) { const f = $("solveForm"); f.classList.remove("shake"); void f.offsetWidth; f.classList.add("shake"); return; }
+  solving = false; solveInput.blur(); solve(v); render();
+}
+solveInput.addEventListener("input", () => {
+  const clean = solveInput.value.toUpperCase().replace(/[^A-Z '\-]/g, "").replace(/ {2,}/g, " ");
+  if (clean !== solveInput.value) solveInput.value = clean;
+  updateCompose();
 });
+$("solveForm").addEventListener("submit", e => { e.preventDefault(); submitSolve(); });
 
-const EMO = {H:"🟩", V:"🟨", X:"⬛", S:"⭐", W:"🟥", Y:"🏳️"};
+const EMO = {H:"🟩", V:"🟩", X:"⬛", S:"⭐", W:"🟥", Y:"🏳️"};   // V = legacy v2.0 vowel hit
 const emojiRow = r => r.history.map(h => EMO[h]).join("");
 function dailyShareText(){
   const r = daily.round; const won = r.status === "won";
@@ -668,6 +703,16 @@ document.addEventListener("keydown", e => {
   const o = anyOpen();
   if (e.key === "Escape" && o) { close(o.id); return; }
   if (o) return;
+  if (solving) {
+    if (e.key === "Escape") { e.preventDefault(); closeSolve(); return; }
+    if (e.target === solveInput) return;            // the text field handles its own typing and Enter
+    if (/^[a-zA-Z]$/.test(e.key)) { e.preventDefault(); typeChar(e.key.toUpperCase()); }
+    else if (e.key === " ") { e.preventDefault(); typeChar(" "); }
+    else if (e.key === "Backspace") { e.preventDefault(); backspace(); }
+    else if (e.key === "Enter") { e.preventDefault(); submitSolve(); }
+    return;
+  }
+  if (e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
   if (/^[a-zA-Z]$/.test(e.key)) { e.preventDefault(); guess(e.key.toUpperCase()); }
   else if (e.key === "Enter") { e.preventDefault(); primaryAction(); }
 });
@@ -685,7 +730,7 @@ if (!store.get("helpV2", false)) open("helpModal");
 if (DEV) window.__rittel = {
   day: DAY, bankSize: BANK.length, bank: BANK, mode: () => mode, answer: () => riddle() && riddle().a, tier: () => riddle() && riddle().tier,
   round: () => JSON.parse(JSON.stringify(R())), run: () => JSON.parse(JSON.stringify(run)), daily: () => JSON.parse(JSON.stringify(daily)),
-  lives, wallet: () => ({...wallet}), owned: () => [...owned], scoreSolve, dailyRiddleId, rules: RULES, config: CONFIG,
+  lives, solving: () => solving, wallet: () => ({...wallet}), owned: () => [...owned], scoreSolve, dailyRiddleId, rules: RULES, config: CONFIG,
   grant(n){ wallet.gold += n; save(); render(); },
 };
 })();
