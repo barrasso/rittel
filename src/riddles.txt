@@ -1,0 +1,383 @@
+# Rittel riddle bank. One per line:  tier|ANSWER|riddle
+# tier: 1 = Squire, 2 = Knight, 3 = Sage. ANSWER: uppercase A-Z and single spaces only, unique.
+# The answer doubles as the riddle's stable id (used to track which riddles a player has seen).
+
+# ---------------- Squire ----------------
+1|ZIPPER|I have two rows of teeth that never eat. Pull my little tab and they lock together.
+1|ANCHOR|I spend my working life on the sea floor so that something above me stays put.
+1|LIGHTHOUSE|I stand alone by the sea and wink all night, warning ships without saying a word.
+1|SNOWMAN|I'm built in winter with a carrot for a nose, and the first warm day is my last.
+1|HOURGLASS|Two glass rooms joined by a narrow door. Sand moves from upstairs to down, and when it's done you flip me over.
+1|SUNDIAL|I tell the time only when the weather is fair, and I go blind at night.
+1|KITE|I fly on a string, I need the wind to rise, and a child runs to launch me.
+1|PARACHUTE|I'm useless until I open, and a falling person is very glad when I do.
+1|COMPASS|One of my needles always points the same way, no matter how you turn me.
+1|SCARECROW|I stand in a field in old clothes all day, and my only job is frightening birds.
+1|PASSPORT|A little book with your face inside. Border guards stamp me, and you need me to leave the country.
+1|ESCALATOR|I'm a staircase that does the climbing for you.
+1|BOOKMARK|I sleep between the pages so you remember where you stopped.
+1|DOORBELL|Press my button and I announce a visitor to the whole house.
+1|TOOTHBRUSH|I visit your mouth twice a day, and my bristles fight whatever you ate.
+1|VOLCANO|A mountain with a fiery temper. When I lose it, rivers of molten rock run down my sides.
+1|RAINBOW|I appear after rain when the sun is behind you. I wear seven colors, and nobody can reach my end.
+1|IGLOO|A house built from blocks of snow that still keeps you warm.
+1|HAMMOCK|A bed with no legs, slung between two trees.
+1|PIGGY BANK|A pink animal with a slot in its back. Feed it coins, and break it when you need them.
+1|MAILBOX|I wait at the end of the driveway with my mouth shut, holding letters until someone comes.
+1|SUITCASE|I travel everywhere with your clothes inside me, and at the airport I ride a moving belt.
+1|TELESCOPE|Look through my small end and I bring the faraway stars close.
+1|MICROSCOPE|I make tiny things look huge, so you can see the creatures in a drop of pond water.
+1|BOOMERANG|Throw me away properly and I come right back to you.
+1|SEESAW|Two children ride me. When one goes up, the other must come down.
+1|TRAMPOLINE|Jump on me and I throw you back toward the sky.
+1|POPCORN|Heat me and I explode, turning from a hard kernel into a fluffy white snack.
+1|WISHBONE|Two people pull me apart after a roast dinner, and whoever gets the bigger piece makes a wish.
+1|FORTUNE COOKIE|A crisp treat at the end of a meal that hides a prediction inside.
+1|SKELETON|Everyone carries one inside them, yet most people are frightened to see one.
+1|TOOTH FAIRY|I trade coins for something small left under your pillow.
+1|CATERPILLAR|I eat leaves all day, wrap myself in a blanket, and wake up with wings.
+1|TADPOLE|I begin with a tail and no legs, and I end with legs and no tail.
+1|CHAMELEON|A lizard that changes color, and whose eyes can look two ways at once.
+1|PORCUPINE|I wear a coat of sharp quills, and nobody wants to hug me.
+1|SNAIL|I carry my house on my back and leave a silvery trail behind me.
+1|GIRAFFE|I'm the tallest animal alive, and I eat the leaves no one else can reach.
+1|PENGUIN|A bird in a tuxedo who cannot fly but swims like a fish.
+1|OCTOPUS|Eight arms, three hearts, and I squirt ink when I'm frightened.
+1|KANGAROO|I hop on two strong legs and carry my baby in a pouch.
+1|BEEHIVE|A busy city of six-sided rooms, where a queen rules and honey is stored.
+1|ACORN|A small nut wearing a little cap. Plant me and wait, and I become a mighty oak.
+1|SUNFLOWER|A tall golden bloom whose face follows the sun, and whose seeds make a salty snack.
+1|CACTUS|I live in the desert, store water inside me, and protect myself with spines.
+1|ICEBERG|Most of me hides underwater. A famous ship found the part you couldn't see.
+1|GLACIER|A river of ice that moves too slowly to see, yet carves out whole valleys.
+1|TORNADO|A spinning funnel of wind that dances across the plains and lifts houses.
+1|THUNDER|I always arrive after the flash. I'm all noise and no light.
+1|EARTHQUAKE|The ground shakes when I come, and scientists measure me on a scale.
+1|ECLIPSE|When the moon steps in front of the sun, daytime turns to dusk for a few minutes.
+1|COMET|An icy traveler with a glowing tail that swings past the sun every so often.
+1|ASTRONAUT|I wear a helmet and a bulky suit, and my office is in orbit.
+1|LIFEGUARD|I sit in a tall chair by the water with my whistle ready, watching the swimmers.
+1|FIREFIGHTER|I slide down a pole, ride a red truck, and run toward the flames.
+1|MAGICIAN|I pull rabbits from hats and saw people in half, and nobody gets hurt.
+1|PIRATE|I sail under a black flag, bury my treasure, and might keep a parrot on my shoulder.
+1|DRAGON|A giant winged reptile from the old stories who breathes fire and sleeps on a pile of gold.
+1|MERMAID|Half woman and half fish, I sing to sailors from the rocks.
+1|UNICORN|A white horse of legend with a single spiral horn.
+1|CASTLE|Stone walls, a moat, towers and a drawbridge. Kings and queens live inside me.
+1|CROWN|A jeweled golden circle worn on a monarch's head.
+1|WISHING WELL|Toss a coin down my deep stone throat and make a hope.
+1|CHESS|A game of kings, queens, bishops and knights played on sixty-four squares.
+1|DOMINOES|Line us up, tip the first one, and we all fall one after another.
+1|JIGSAW PUZZLE|A picture broken into many curvy pieces that you put back together.
+1|SANDCASTLE|A fort built on the beach that the tide will knock down.
+1|BLINDFOLD|Tie me over your eyes for a party game and you can't see a thing.
+1|BACKPACK|Two straps over your shoulders, and I carry your books to school.
+1|WHEELBARROW|One wheel in front and two handles behind. I carry soil around the garden.
+1|MAGNET|I pull metal toward me without touching it, and my opposite ends attract.
+1|BATTERY|I hold energy in a small package, and when I'm drained your remote stops working.
+1|LIGHT BULB|The symbol of a bright idea in cartoons. Screw me in and I chase the dark away.
+1|VACUUM CLEANER|I roar across the carpet and swallow the dust and crumbs.
+1|ALARM CLOCK|I ring every morning even though nobody thanks me, and you slap my snooze button.
+1|WASHING MACHINE|Clothes go in dirty, I spin them with soap and water, and they come out clean.
+1|REFRIGERATOR|A cold cupboard in the kitchen whose light switches on when you open the door.
+1|TOASTER|Put bread in my slots, and a few minutes later I pop it up warm and brown.
+1|KETTLE|I sing or whistle when the water inside me boils.
+1|CHOPSTICKS|Two thin sticks that work as a pair to pick up food.
+1|STAPLER|I bite through paper and leave a tiny metal tooth behind to hold the pages together.
+1|ERASER|I make mistakes disappear, but I get smaller every time I do.
+1|FIREWORKS|We shoot into the night sky on holidays and burst into colors with a bang.
+1|BIRTHDAY CAKE|Once a year I'm covered in candles, and you blow them out with a wish.
+1|SNOW GLOBE|Shake me and a blizzard falls over the tiny town inside my glass.
+1|HOT AIR BALLOON|A giant bag of warm air that lifts a wicker basket into the sky.
+1|SUBMARINE|A ship that sinks on purpose and comes back up, with a periscope to peek above the waves.
+1|HELICOPTER|I fly without wings. My blades spin on top, and I can hover in one place.
+1|TRAFFIC LIGHT|Red, yellow and green, I tell the cars when to stop and when to go.
+1|ROLLER COASTER|I climb slowly, then drop fast. People scream, then pay to ride me again.
+1|FERRIS WHEEL|A giant ring at the fair that turns slowly and lifts people in little cars to the top.
+1|CAROUSEL|Painted horses go up and down and round and round to organ music.
+1|VENDING MACHINE|Put in a coin, press a button, and I drop a snack.
+1|CROSSWORD|A grid of black and white squares that you fill with words from clues.
+1|SLEEPING BAG|A bed you can roll up and carry camping. You zip yourself inside.
+1|CAMPFIRE|Campers sit around me telling stories and toasting marshmallows.
+1|CANOE|A narrow boat you paddle, pointed at both ends.
+1|SNORKEL|A tube that lets you breathe while your face is underwater.
+1|LIFE JACKET|Wear me on a boat and I'll keep your head above water.
+1|WOODPECKER|I drum on tree trunks with my beak to find bugs.
+1|FLAMINGO|A pink bird that often stands on one leg, and gets its color from what it eats.
+1|SKUNK|A black and white animal whose smelly spray makes everyone leave.
+1|ARMADILLO|I wear armor plates, and some of my kind can roll up into a ball.
+1|BEAVER|I build dams with my teeth and slap my flat tail on the water.
+1|SQUIRREL|I bury nuts for the winter and often forget where I put them.
+1|LADYBUG|A little red beetle with black spots that gardeners are glad to see.
+1|FIREFLY|A bug that flashes a light from its tail on summer nights.
+1|JELLYFISH|No brain, no bones and no heart, and I sting as I drift through the sea.
+1|SEAHORSE|A fish shaped like a chess knight, whose fathers carry the babies.
+1|STARFISH|I live on the sea floor with five arms, and if I lose one I grow it back.
+1|PEACOCK|A bird who shows off a huge fan of tail feathers covered in eyes.
+1|BRAIN FREEZE|A sudden sharp headache from eating ice cream too fast.
+1|HAIL|Balls of ice that fall from summer thunderstorms and dent cars.
+1|ICICLE|I grow downward from the roof in winter, like a frozen dagger.
+1|PUDDLE|After the rain I lie in the road reflecting the sky, and children love to jump in me.
+1|SNOWFLAKE|I have six sides, no two of me are said to be alike, and I melt on your tongue.
+1|MOAT|A ring of water dug around a castle to keep enemies out.
+1|CATAPULT|A siege engine that hurls stones over castle walls.
+1|SUIT OF ARMOR|A metal outfit for a knight. Empty ones stand guard in castle halls.
+1|KALEIDOSCOPE|Look through me and turn: colorful patterns appear, never the same twice.
+1|SNOW ANGEL|Lie on your back in a fresh winter blanket and sweep your arms and legs, and I appear with wings.
+1|HOPSCOTCH|Chalk squares on the sidewalk, a tossed stone, and hopping on one foot.
+1|TUG OF WAR|Two teams pull a rope in opposite directions until one side gives up.
+1|TREE HOUSE|A home with no foundations, built in the branches by children.
+1|PINATA|At parties, blindfolded guests hit me with a stick until I give up my candy.
+1|CONFETTI|Tiny scraps of paper thrown at celebrations that nobody wants to sweep up.
+
+# ---------------- Knight ----------------
+2|DEADLINE|I'm a line with a grim name. Cross me at work and you're late, not dead.
+2|BOTTLENECK|I'm the narrow top of a bottle, and also the slowest step that holds up everything else.
+2|FIREWALL|A wall that stops no flames, only unwanted traffic trying to reach your network.
+2|SPAM|Once a canned meat, now I'm the junk that floods your inbox.
+2|COOKIE|Sweet in the kitchen, but in your browser I remember who you are.
+2|BUG|In the garden I crawl, in the code I crash things, and either way people want to squash me.
+2|CLOUD|I hold your photos up above you, though really I'm just someone else's computer.
+2|PASSWORD|I'm best when long and kept to yourself. Share me and I'm worthless; forget me and you're locked out.
+2|HASHTAG|On old phones I was the pound key. Now put me in front of a word and posts gather around it.
+2|SCREENSHOT|I'm a picture of a picture, taken without any camera.
+2|AUTOCORRECT|I change your words when you didn't ask me to, and I'm so ducking helpful.
+2|WIFI|Invisible, I connect you to the world, and every guest asks for my password.
+2|BLUETOOTH|Named after a Viking king, I let your earbuds talk to your phone.
+2|SELFIE|A portrait taken at arm's length, where the photographer is also the subject.
+2|PODCAST|A radio show that waits for you, starting whenever you press play.
+2|SPOILER|I ruin the ending before you get there, and I'm also the wing on the back of a sports car.
+2|DEJA VU|You're sure you've been here before, but this is the first time.
+2|NIGHTMARE|I'm a horse of the night that gallops through your sleep.
+2|DAYDREAM|A journey you take with your eyes open, without ever leaving your chair.
+2|HICCUP|A small jump in your chest that comes uninvited, and people try to scare me away.
+2|YAWN|I'm contagious but harmless, and just reading about me may make you do me.
+2|GOOSEBUMPS|You get me when you're cold or thrilled, and I'm named after a farm bird's skin.
+2|SECOND HAND|I'm the thinnest pointer on the clock, and also how you'd describe a used coat.
+2|LEAP YEAR|I come around every four years and give February one more day.
+2|MIDNIGHT|I'm the moment today becomes tomorrow, when a coach turns back into a pumpkin.
+2|HALFTIME|In the middle of the match the players rest, and the band takes the field.
+2|OVERTIME|When the game is tied at the end I make it last longer, and at work I pay extra.
+2|DEAD END|A street that goes nowhere, and an idea that goes nowhere too.
+2|ROUNDABOUT|A circle in the road where you go around to go straight, and also a way of saying things indirectly.
+2|HONEYMOON|The trip after the wedding, named after something sweet and something in the sky.
+2|BLUE MOON|The rare second full one in a calendar month, seen only once in a while.
+2|BUTTERFINGERS|What you call someone who keeps dropping things, though their hands contain no dairy.
+2|COUCH POTATO|A vegetable that grows on the sofa in front of the television.
+2|BOOKWORM|A creature that devours books but never gets full, and you might be one too.
+2|NIGHT OWL|A person who comes alive after dark, named for a bird that does the same.
+2|EARLY BIRD|I catch the worm because I'm up before everyone else.
+2|COPYCAT|An animal that just does whatever you do.
+2|SCAPEGOAT|The animal blamed for everyone else's mistakes.
+2|RED HERRING|A fishy clue that leads detectives the wrong way.
+2|WILD GOOSE CHASE|A pointless hunt, named after a bird you'll never catch.
+2|ELEPHANT IN THE ROOM|The enormous thing everybody can see but nobody mentions.
+2|COLD FEET|Nerves before a wedding, though your toes are perfectly warm.
+2|PIECE OF CAKE|Something very easy, though no dessert is involved.
+2|BREAK A LEG|What actors wish each other before a show, meaning the opposite of harm.
+2|CROCODILE TEARS|Fake sadness, named after a reptile said to weep while it eats.
+2|WHITE LIE|A small untruth told to be kind, given the color of innocence.
+2|GREEN THUMB|You have one if plants thrive in your care, though your hand isn't colored at all.
+2|SILVER LINING|The bright edge said to be on every dark cloud.
+2|BRAINSTORM|A weather event in a meeting room, where ideas rain down.
+2|HEADLINE|I sit at the top of the page, shouting the story in big letters.
+2|FOOTNOTE|I sit at the bottom of the page, small and usually skipped.
+2|SIDEKICK|Batman has Robin as one. I'm the helper who never gets top billing.
+2|UNDERDOG|Nobody expects me to win, which is why everybody cheers when I do.
+2|SKELETON KEY|A key that opens many locks, though it has no bones.
+2|BACKSEAT DRIVER|I never touch the steering, but I tell whoever does exactly how to do it.
+2|BAGPIPES|I'm a bag that wails a Scottish tune when squeezed under an arm.
+2|ACCORDION|Squeeze me and pull me apart, and I breathe music through my folds.
+2|METRONOME|I tick back and forth at a steady pace so musicians keep time.
+2|SILHOUETTE|A portrait made only of shadow: all outline and no detail.
+2|MIRAGE|Thirsty travelers in the desert see me as water, but I'm only a trick of hot air.
+2|FOSSIL|I was alive millions of years ago. Now I'm a stone in the shape of my old self.
+2|AMBER|I'm golden tree resin turned to stone, and sometimes an ancient insect is trapped inside me.
+2|PEARL|I begin as an irritating grain inside an oyster and end up as a jewel.
+2|QUICKSAND|I look like solid ground, but step on me and I grab your feet.
+2|WHIRLPOOL|A spinning drain in the sea that pulls boats toward its center.
+2|TIDE|Twice a day I come in and twice I go out, pulled along by the moon.
+2|DEW|I appear on the grass overnight without any rain, and I'm gone by mid-morning.
+2|FOG|A cloud that came down to walk the streets.
+2|ALPHABET|I have twenty-six members, and they always stand in the same order.
+2|SILENT LETTER|I'm in knife, gnome and island, but nobody ever hears me.
+2|QUESTION MARK|I curl up at the end of every query, waiting for an answer.
+2|PALINDROME|I read the same forwards and backwards, like racecar or level.
+2|ANAGRAM|I'm the same letters rearranged, the way listen becomes silent.
+2|TYPO|A small mistake made by the fingers, not the brain.
+2|CLIFFHANGER|An ending that leaves you dangling over the edge until the next episode.
+2|PLOT TWIST|The moment in a story when everything you believed turns out to be wrong.
+2|MOUSETRAP|I serve cheese to only one guest at a time, and they never leave.
+2|JACK IN THE BOX|Turn my crank, hear a tune, and I spring out to surprise you.
+2|TIME CAPSULE|A box buried today, meant to be opened by the people of the future.
+2|HAUNTED HOUSE|A home where the previous owners never truly moved out.
+2|GHOST TOWN|A place with streets and houses but nobody living in them.
+2|SCAVENGER HUNT|A game where you race to find a list of odd items.
+2|HIDE AND SEEK|One player counts with eyes closed while everyone else vanishes.
+2|MUSICAL CHAIRS|When the music stops everyone scrambles for a seat, and one player is always left standing.
+2|YOYO|I go down and up on a string, and I can even walk the dog.
+2|RUSH HOUR|A time named for speed, when the traffic barely moves.
+2|HAPPY HOUR|Usually more than sixty minutes of cheaper drinks, despite my name.
+2|MOONLIGHTING|Working a second job at night, as if by the light of the moon.
+2|RUBBER DUCK|A bath toy that programmers explain their bugs to.
+2|INFINITE LOOP|A program that goes round and round and never stops.
+2|BLUE SCREEN|The error a crashing Windows computer once showed, nicknamed after death.
+2|CAPTCHA|I ask you to prove you're human by clicking on all the traffic lights.
+2|HELLO WORLD|The first words almost every new program learns to say.
+2|EASTER EGG|A hidden surprise left by developers, named after a spring tradition.
+2|TROLL|I once lived under bridges, and now I live in comment sections.
+2|GHOSTING|Vanishing from someone's life without a word, like a spirit.
+2|REFLECTION|I'm you, but reversed. I live in mirrors and still water, and I move only when you do.
+2|KEYHOLE|I'm the eye of a door. Peek through me and you'll see into the next room.
+2|HANDSHAKE|Two people grip hands to greet or seal a deal, and computers do me too before they talk.
+2|AUTOGRAPH|A famous person's name, written in their own hand for a fan.
+2|BLIND DATE|A meeting of two strangers where neither can see what's coming.
+2|STAGE FRIGHT|A fear that grows as the curtain rises and the audience goes quiet.
+2|SLEEPWALKING|I take a stroll while my mind is fast asleep.
+2|PINS AND NEEDLES|The prickly feeling when your foot falls asleep, with no sewing kit in sight.
+2|GOLDEN HOUR|The time just after sunrise or before sunset when photographers say the light is best.
+2|TIME ZONE|Cross my border and it's suddenly a different hour.
+2|EQUATOR|An imaginary belt around the Earth's waist.
+2|QUILL|Pluck me from a goose, dip me in ink, and write a manuscript.
+2|DRAWBRIDGE|Lower me to welcome guests. Raise me and the castle becomes an island.
+2|TOWN CRIER|Before newspapers, I rang a bell in the square and shouted the news.
+2|CARRIER PIGEON|A feathered mail service that always flies home.
+2|FINGERPRINT|Everyone has ten of me, no two people share them, and detectives dust for me.
+2|MARATHON|A race named after a battle, and a messenger who ran to bring the news.
+2|LIGHT YEAR|I sound like a length of time, but I'm really a distance.
+2|NORTH STAR|I barely move all night, and sailors find their way by me.
+2|WEDDING RING|A circle with no end, worn on the fourth finger, promising forever.
+2|POKER FACE|An expression that gives nothing away, worn at card tables.
+2|ELBOW GREASE|Hard physical work, though no oil is involved.
+2|WINDOW SHOPPING|Browsing the stores with no intention of buying anything.
+2|COLD CALL|Phoning a stranger to sell them something, though the temperature is fine.
+2|RED TAPE|Bureaucratic rules that tie up progress.
+2|SHOOTING STAR|I'm just a speck of space dust burning up in the night sky, yet people make wishes on me.
+2|FOOLS GOLD|I glitter like treasure in the pan, but I'm only iron and sulfur.
+
+# ---------------- Sage ----------------
+3|INSOMNIA|I keep you company all night, and the more you want me gone, the longer I stay.
+3|NOSTALGIA|A sweet ache for a time that may never have been as good as you remember.
+3|PROCRASTINATION|I'll tell you what I am tomorrow.
+3|IMPOSTER SYNDROME|Even after you succeed, I whisper that you're a fraud who just got lucky.
+3|HINDSIGHT|I'm always twenty-twenty, but only once it's too late.
+3|DOMINO EFFECT|One small push, and a whole line of consequences falls in order.
+3|BUTTERFLY EFFECT|A flap of tiny wings in one place, they say, can cause a storm somewhere far away.
+3|SNOWBALL EFFECT|I start small at the top of the hill and grow bigger the farther I roll.
+3|PARADOX|A statement that contradicts itself. This sentence is false, for instance.
+3|OXYMORON|Jumbo shrimp, deafening silence and pretty ugly are all examples of me.
+3|EUPHEMISM|A gentle way of saying something harsh, like passed away for died.
+3|ECHO CHAMBER|A room where only your own opinions bounce back, louder each time.
+3|RABBIT HOLE|Fall down me and an hour vanishes, one link after another.
+3|WRITERS BLOCK|A wall with no bricks that stands between an author and the page.
+3|MURPHYS LAW|According to me, anything that can go wrong will go wrong.
+3|SUNK COST|You keep spending because you've already spent. I'm the fallacy that won't let go.
+3|OCCAMS RAZOR|I cut away needless assumptions, because the simplest explanation is usually right.
+3|DEVILS ADVOCATE|I argue for the side I don't believe in, just to test yours.
+3|GORDIAN KNOT|An impossible tangle that a young conqueror simply cut through with his sword.
+3|ACHILLES HEEL|The one weak spot of a mighty warrior, where his mother held him as she dipped him in a magic river.
+3|TROJAN HORSE|A wooden gift with soldiers hidden inside, and now also a sneaky kind of program.
+3|PANDORAS BOX|Opened out of curiosity, I let every trouble loose on the world, leaving only hope inside.
+3|MIDAS TOUCH|Everything I lay a finger on turns to gold, including dinner, sadly.
+3|SWORD OF DAMOCLES|A blade hung by a single hair above a throne, reminding the powerful of their peril.
+3|PYRRHIC VICTORY|A win that costs so much it might as well be a defeat.
+3|SPHINX|With a lion's body and a human head, I guarded a city and devoured anyone who failed my riddle.
+3|LABYRINTH|A maze built to hold a bull-headed beast, escaped with the help of a ball of thread.
+3|PHOENIX|I burn to ashes and rise from them again, a bird reborn.
+3|EXCALIBUR|Pulled from a stone or handed over by a lady of the lake, I made a boy a king.
+3|HOLY GRAIL|The cup that knights quested for, and now the name for any ultimate prize.
+3|ROUND TABLE|Furniture with no head, so that no knight of Camelot sat above another.
+3|JESTER|I wear bells and motley, I may mock the king and keep my head, and I'm the one posing these riddles.
+3|CHECKMATE|From Persian words about a helpless king, I'm how the game ends.
+3|STALEMATE|Nobody wins and nobody loses: the king is not attacked, yet has no legal move.
+3|GAMBIT|In chess I'm an opening sacrifice. Elsewhere I'm any risky first move made to gain an edge.
+3|MOBIUS STRIP|Give a paper loop a half twist and I appear, with only one side and one edge.
+3|FIBONACCI SEQUENCE|One, one, two, three, five, eight. Each of my numbers is the sum of the two before it.
+3|INFINITY|A sideways eight that never ends.
+3|BLACK HOLE|I'm so dense that not even light escapes me, and time slows near my edge.
+3|SUPERNOVA|A dying star's final, brilliant explosion.
+3|GRAVITY|I'm why the apple fell and why you stay on the ground. You can't see me, but without me you'd float away.
+3|ENTROPY|I always increase, and your room drifts toward me if you never tidy it.
+3|PLACEBO|A sugar pill that helps because you believe it will.
+3|DOPPELGANGER|A stranger who looks exactly like you. Meeting me is said to be bad luck.
+3|AMNESIA|A thief that steals memories and leaves the person behind.
+3|ALIBI|Proof that you were somewhere else when the crime happened.
+3|CROSSROADS|Where two paths meet and a choice must be made. The blues say the devil waits there.
+3|POINT OF NO RETURN|The moment after which turning back is no longer possible.
+3|CALM BEFORE THE STORM|The quiet hush that comes just ahead of trouble.
+3|TIP OF THE ICEBERG|The small visible part of a much bigger problem.
+3|DARK HORSE|A contender nobody knew about who suddenly comes from behind to win.
+3|LAME DUCK|A leader whose successor has already been chosen, still in office but limping along.
+3|WHITE ELEPHANT|A costly gift that's more trouble than it's worth, and also a holiday swapping game.
+3|BLACK SHEEP|The family member who doesn't fit in with the rest of the flock.
+3|ACID TEST|A decisive trial, from the days when real gold was proven by surviving a chemical.
+3|CANARY IN A COAL MINE|An early warning, after the small bird miners once carried underground to detect bad air.
+3|SWAN SONG|A final performance, named for a bird said to sing only once, just before it dies.
+3|ALBATROSS|A burden you carry because of a past mistake, like the bird hung around the old sailor's neck in the poem.
+3|HOBSONS CHOICE|An option that is no option at all: take the horse nearest the stable door, or none.
+3|RUBICON|A small river that Caesar crossed with his army. Now crossing me means there's no going back.
+3|OLYMPIC TORCH|I'm lit by the sun's rays in Greece and carried by runners to open the games.
+3|SISYPHUS|Forever pushing a boulder up a hill, only to watch it roll back down.
+3|ODYSSEY|A long, wandering journey, named for a hero who took ten years to get home.
+3|CASSANDRA|I foresaw the truth, but no one ever believed me.
+3|NARCISSUS|He fell in love with his own reflection in a pool, and a flower bears his name.
+3|ICARUS|He flew too close to the sun on wings of feathers and wax.
+3|DEUS EX MACHINA|A god lowered from the machine: the convenient rescue that wraps up a plot.
+3|DEADLOCK|Two sides each wait for the other, so nothing moves. In software, two threads each hold the lock the other needs.
+3|RACE CONDITION|A bug where the outcome depends on who gets there first, and it vanishes when you look for it.
+3|TECHNICAL DEBT|Shortcuts in code that you borrow today and repay with interest later.
+3|STACK OVERFLOW|A function calls itself until memory runs out, and I'm also the site where developers find answers.
+3|OFF BY ONE|The classic error of counting fence posts as if they were fence panels.
+3|SINGLE POINT OF FAILURE|The one part whose breakdown takes down the whole system.
+3|LOREM IPSUM|Fake Latin that designers use to fill a page before the real words arrive.
+3|DOOMSCROLLING|Flicking endlessly through bad news late at night.
+3|PATIENCE|I'm a virtue, a card game you play alone, and the thing you need most in a queue.
+3|HUMBLE PIE|You eat me when you've been proved wrong, though I'm on no menu.
+3|GLASS CEILING|An invisible barrier that stops people from rising to the top.
+3|COMFORT ZONE|A cozy place in the mind where nothing grows.
+3|BUCKET LIST|Things to do before you kick a certain pail.
+3|SLEIGHT OF HAND|The quick fingers that make a coin vanish before your eyes.
+3|SMOKE AND MIRRORS|Illusion and misdirection used to hide the truth.
+3|SPLIT SECOND|A moment so brief it's as though time were cut in two.
+3|NICK OF TIME|Just barely, at the very last possible moment.
+3|SECOND WIND|Fresh energy that arrives just when you thought you were spent.
+3|SIXTH SENSE|The one beyond sight, sound, smell, taste and touch.
+3|CLOUD NINE|Where you float when you're blissfully happy.
+3|DOUBLE EDGED SWORD|Something that helps and harms in equal measure, like a blade that cuts both ways.
+3|BITTERSWEET|A feeling that's happy and sad at once, like a farewell party.
+3|ZEITGEIST|The spirit of the age, in a word borrowed from German.
+3|SCHADENFREUDE|The guilty pleasure of watching someone else fail, in a word borrowed from German.
+3|WANDERLUST|A restless hunger to travel.
+3|SERENDIPITY|Finding something wonderful that you weren't looking for.
+3|EPIPHANY|A sudden flash of understanding, like a lamp switching on in the mind.
+3|CATHARSIS|The release of pent-up emotion after a good cry or a tragic play.
+3|GRAVEYARD SHIFT|Working through the dead of night.
+3|BALLPARK FIGURE|A rough estimate, named after the place where baseball is played.
+3|SPILL THE BEANS|To reveal the secret, perhaps by knocking over a jar of legumes.
+3|LET THE CAT OUT OF THE BAG|To reveal the secret, as though a pet had escaped from a sack.
+3|BITE THE BULLET|To face something painful with courage, as wounded soldiers once did without anesthetic.
+3|BURN THE MIDNIGHT OIL|To work late into the night, as if by the light of an old lamp.
+3|UNDER THE WEATHER|Feeling sick, as if a storm cloud hung over you alone.
+3|HOLD YOUR HORSES|Wait a moment and be patient, rider.
+3|GRAIN OF SALT|How you take a claim you doubt: with a pinch of seasoning.
+3|AN ARM AND A LEG|A very high price, though you get to keep all your limbs.
+3|LAST STRAW|The final small burden that breaks the camel's back.
+3|SPEAK OF THE DEVIL|What you say when the very person you were discussing walks in.
+3|ELEVENTH HOUR|The very last moment before it's too late.
+3|HOMESICKNESS|An illness with no germs. You catch me when you're far from where you started.
+3|FIRST IMPRESSION|You never get a second chance to make me.
+3|DAYLIGHT SAVING TIME|We move the clocks and lose an hour of sleep, yet nothing is actually saved.
+3|INTERNATIONAL DATE LINE|Cross me on a ship and it suddenly becomes tomorrow, or yesterday.
+3|PRIME MERIDIAN|The line where east meets west, drawn through Greenwich.
+3|BERMUDA TRIANGLE|A patch of ocean said to swallow ships and planes without a trace.
+3|ATLANTIS|A great island city that, legend says, sank beneath the waves in a single day.
+3|EL DORADO|The lost city of gold that explorers chased through the jungle.
+3|STONEHENGE|A ring of giant standing stones on an English plain, lined up with the midsummer sunrise.
+3|ROSETTA STONE|A slab bearing the same decree in three scripts, which unlocked Egyptian hieroglyphs.
+3|TERRACOTTA ARMY|Thousands of clay soldiers buried to guard an emperor in the afterlife.
+3|MAGNA CARTA|A charter sealed by a king in 1215 that limited his own power.
+3|PRINTING PRESS|Gutenberg's machine, which let books be made by the thousand.
+3|SCRIBE|Before printing, I copied books by hand, one letter at a time.
+3|ILLUMINATED MANUSCRIPT|A handwritten book whose pages glow with gold leaf and painted capitals.
+3|WAX SEAL|Melted, pressed and stamped, I proved a letter had not been opened.
+3|ALCHEMIST|Part chemist and part mystic, I boiled and distilled, hoping to turn lead into gold.
