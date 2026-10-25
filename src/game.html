@@ -1,155 +1,84 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-skin="parchment">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Rittel — the daily riddle</title>
-<meta name="theme-color" content="#101116">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧩</text></svg>">
+<title>Rittel · riddles of the court</title>
+<meta name="description" content="Rittel: a daily riddle game. Wheel of Fortune meets Wordle, with an endless Gauntlet mode.">
+<meta name="theme-color" content="#e8d4a6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#20150d" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="{{FAVICON}}">
+{{FONTS}}
 <style>
-:root{
-  --bg:#101116;--panel:#1a1c24;--panel2:#242733;--text:#eef0f5;--muted:#9aa0ae;
-  --tile:#232631;--tileBorder:#3a3e4c;--hit:#3fa66b;--vowel:#d9a93a;--miss:#3b3d46;
-  --bad:#e05260;--accent:#8b7bff;--key:#555b6b;--keyText:#fff;--shadow:0 10px 40px rgba(0,0,0,.45);
-}
-@media (prefers-color-scheme: light){
-  :root{--bg:#f6f6fa;--panel:#ffffff;--panel2:#eceef4;--text:#1a1c24;--muted:#626878;
-    --tile:#ffffff;--tileBorder:#c9ccd6;--miss:#8a8e99;--key:#d5d8e1;--keyText:#1a1c24;--shadow:0 10px 40px rgba(20,20,40,.18);}
-}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  display:flex;flex-direction:column;align-items:center;min-height:100dvh;overflow-x:hidden}
-button{font:inherit;color:inherit;cursor:pointer}
-header{width:100%;max-width:560px;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--tileBorder)}
-header h1{margin:0;font-size:28px;letter-spacing:.06em;font-weight:900;display:flex;align-items:center;gap:8px}
-header h1 .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--hit),var(--vowel));display:inline-block}
-.icon-btn{background:none;border:0;width:40px;height:40px;border-radius:10px;display:grid;place-items:center}
-.icon-btn:hover{background:var(--panel2)}
-.icon-btn svg{width:24px;height:24px;fill:none;stroke:var(--text);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-main{width:100%;max-width:560px;flex:1;display:flex;flex-direction:column;padding:12px 14px 8px;gap:12px}
-.meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
-.dev{background:var(--bad);color:#fff;border-radius:6px;padding:2px 6px;font-size:11px;margin-left:6px}
-.card{background:var(--panel);border:1px solid var(--tileBorder);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow)}
-.riddle{font-size:clamp(17px,4.6vw,20px);line-height:1.45;font-weight:500;margin:0}
-.riddle::before{content:"“";font-size:2em;line-height:0;vertical-align:-.35em;color:var(--accent);margin-right:2px}
-.lives{display:flex;align-items:center;gap:6px}
-.pip{width:22px;height:8px;border-radius:4px;background:var(--hit);transition:background .3s,transform .3s}
-.pip.lost{background:var(--miss);transform:scaleY(.6)}
-.lives.danger .pip:not(.lost){background:var(--bad)}
-#board{flex:1;max-height:340px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 18px;padding:8px 0;min-height:80px;align-content:center}
-.word{display:flex;gap:5px}
-.tile{width:var(--ts,44px);height:calc(var(--ts,44px)*1.18);perspective:700px}
-.tile .in{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.4,.5,1)}
-.tile.rev .in{transform:rotateX(180deg)}
-.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:7px;display:grid;place-items:center;
-  font-weight:800;font-size:calc(var(--ts,44px)*.58)}
-.front{background:var(--tile);border:2px solid var(--tileBorder)}
-.front::after{content:"";width:40%;height:3px;border-radius:2px;background:var(--tileBorder);position:absolute;bottom:18%}
-.back{transform:rotateX(180deg);background:var(--hit);color:#fff;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
-.tile.v .back{background:var(--vowel)}
-.tile.missed .back{background:var(--bad)}
-.tile.win .in{animation:bounce .6s ease var(--d,0s)}
-@keyframes bounce{0%,100%{transform:rotateX(180deg) translateY(0)}40%{transform:rotateX(180deg) translateY(-12px)}}
-.punct{width:calc(var(--ts,44px)*.5);display:grid;place-items:center;font-weight:800;font-size:calc(var(--ts,44px)*.58)}
-.shake{animation:shake .45s}
-@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
-#msg{text-align:center;min-height:22px;font-size:14px;color:var(--muted)}
-#kb{width:100%;max-width:560px;padding:0 6px calc(10px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:7px;user-select:none}
-.row{display:flex;gap:5px;justify-content:center}
-.key{flex:1;max-width:46px;height:56px;border:0;border-radius:8px;background:var(--key);color:var(--keyText);font-weight:700;font-size:18px;position:relative;
-  transition:background .25s,transform .08s,opacity .25s}
-.key:active{transform:scale(.94)}
-.key.vowel::after{content:"−1";position:absolute;top:3px;right:4px;font-size:9px;font-weight:800;color:var(--vowel)}
-.key.hit{background:var(--hit);color:#fff}
-.key.vhit{background:var(--vowel);color:#1a1300}
-.key.vhit::after,.key.miss::after{display:none}
-.key.miss{background:var(--miss);color:rgba(255,255,255,.45)}
-.key:disabled{cursor:default}
-.key.locked{opacity:.35}
-.wide{flex:none;max-width:none;padding:0 18px;font-size:15px;letter-spacing:.04em}
-#solveBtn{background:var(--accent);color:#fff;flex:1;max-width:none}
-.legend{text-align:center;font-size:12px;color:var(--muted)}
-.legend b{color:var(--vowel)}
-/* modals */
-.overlay{position:fixed;inset:0;background:rgba(5,6,10,.6);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
-.overlay.open{display:flex;animation:fade .2s}
-@keyframes fade{from{opacity:0}}
-.modal{background:var(--panel);border:1px solid var(--tileBorder);border-radius:18px;width:100%;max-width:420px;max-height:92dvh;overflow:auto;padding:22px 22px 20px;position:relative;box-shadow:var(--shadow);animation:pop .25s cubic-bezier(.3,1.4,.5,1)}
-@keyframes pop{from{transform:translateY(16px) scale(.97)}}
-.modal h2{margin:0 0 10px;font-size:22px}
-.modal h3{margin:18px 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.close{position:absolute;top:10px;right:10px}
-.modal p,.modal li{line-height:1.5;font-size:15px}
-.modal ul{padding-left:18px;margin:8px 0}
-.ex{display:flex;gap:4px;margin:10px 0;--ts:34px}
-.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;font-size:16px;background:var(--accent);color:#fff;width:100%}
-.btn.ghost{background:var(--panel2);color:var(--text)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;gap:4px}
-.stats b{display:block;font-size:30px;font-weight:800}
-.stats span{font-size:11px;color:var(--muted)}
-.dist{display:flex;flex-direction:column;gap:4px}
-.bar{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700}
-.bar .lbl{width:14px;text-align:right}
-.bar .fill{background:var(--miss);color:#fff;padding:2px 8px;border-radius:4px;text-align:right;min-width:24px;transition:width .6s}
-.bar.me .fill{background:var(--hit)}
-.result{text-align:center}
-.result .ans{font-size:24px;font-weight:900;letter-spacing:.08em;margin:6px 0}
-.result .emo{font-size:20px;letter-spacing:2px;word-break:break-all}
-.foot{display:flex;gap:12px;align-items:center;margin-top:16px}
-.foot .cd{flex:1;text-align:center}
-.foot .cd small{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-.foot .cd b{font-size:26px;font-variant-numeric:tabular-nums}
-#solveInput{width:100%;font:inherit;font-size:22px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:12px 14px;border-radius:12px;border:2px solid var(--tileBorder);background:var(--bg);color:var(--text);outline:none;margin:6px 0 12px}
-#solveInput:focus{border-color:var(--accent)}
-.hintline{font-size:13px;color:var(--muted);margin:0}
-.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:700;font-size:14px;z-index:40;opacity:0;transition:opacity .25s;pointer-events:none}
-.toast.on{opacity:1}
-@media (max-height:700px){.key{height:48px}.card{padding:12px 14px}}
-@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+{{CSS}}
 </style>
 </head>
 <body>
 <header>
-  <button class="icon-btn" id="helpBtn" aria-label="How to play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><path d="M12 17.5h.01"/></svg></button>
-  <h1><span class="dot"></span>Rittel</h1>
-  <button class="icon-btn" id="statsBtn" aria-label="Statistics"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+  <div class="hbtns">
+    <button class="icon-btn" id="helpBtn" aria-label="How to play"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 2.5-3 4.5"/><path d="M12 17.5h.01"/></svg></button>
+    <button class="icon-btn" id="hallBtn" aria-label="Hall of Fame"><svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3"/></svg></button>
+  </div>
+  <div class="brand">{{LOGO}}<h1><span>R</span>ittel</h1></div>
+  <div class="hbtns">
+    <button class="icon-btn" id="shopBtn" aria-label="The Armory (shop)"><svg viewBox="0 0 24 24"><path d="M9 4h6l-1.5 3h-3z"/><path d="M10.5 7C6 9 4 13 4 16a5 5 0 0 0 5 5h6a5 5 0 0 0 5-5c0-3-2-7-6.5-9"/><path d="M12 11v6M10 12.5h3a1.25 1.25 0 0 1 0 2.5h-2a1.25 1.25 0 0 0 0 2.5h3"/></svg></button>
+    <button class="icon-btn" id="statsBtn" aria-label="Daily statistics"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></button>
+  </div>
 </header>
+<nav class="modes" aria-label="Game mode">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-mode="daily" id="tabDaily">Daily Riddle</button>
+    <button class="tab" role="tab" data-mode="gauntlet" id="tabGauntlet">The Gauntlet</button>
+  </div>
+  <button class="purse" id="purse" aria-label="Gold. Open the Armory"><span class="coin" aria-hidden="true"></span><b id="gold">0</b></button>
+</nav>
 <main>
-  <div class="meta"><span id="dayLabel">Riddle #1</span><div class="lives" id="lives" aria-label="lives"></div></div>
+  <div class="meta"><span id="dayLabel"></span><span class="tier" id="tier"></span><div class="lives" id="lives"></div></div>
+  <div class="runbar" id="runbar" hidden><span>Score <b id="runScore">0</b></span><span>Next solve <b id="runStreak">×1</b></span><span>Solved <b id="runSolved">0</b></span></div>
   <div class="card"><p class="riddle" id="riddle"></p></div>
   <div id="board" aria-live="polite"></div>
-  <div id="msg"></div>
+  <div id="msg" aria-live="polite"></div>
+  <section id="startPanel" class="start" hidden>
+    <h2>The Gauntlet</h2>
+    <p>Riddle after riddle until thy lives run out. Lives carry from one riddle to the next. Every solve heals 1 life, and a flawless solve heals 2. Streaks multiply thy points.</p>
+    <p class="best" id="bestRun"></p>
+    <ol class="lb mini" id="startTop" hidden></ol>
+    <button class="btn seal" id="startRun">Enter the Gauntlet</button>
+  </section>
 </main>
 <div id="kb"></div>
+<div id="adSlot" class="ad-slot" hidden aria-hidden="true"></div>
 
 <div class="overlay" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="modal">
     <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <h2 id="helpTitle">How to play</h2>
-    <p>Read the riddle. Reveal the answer letter by letter — then solve it before you run out of lives. A new riddle every day.</p>
+    <h2 id="helpTitle">Hear ye, hear ye</h2>
+    <p>The court jester poses riddles. Reveal each answer letter by letter, then solve it before thy lives run out.</p>
     <ul>
-      <li>You have <b>6 lives</b>.</li>
       <li><b>Consonants</b> are free if they're in the answer. A wrong consonant costs <b>1 life</b>.</li>
-      <li><b>Vowels</b> (A E I O U) always cost <b>1 life</b> — right or wrong. You buy them. You can't buy a vowel with your last life.</li>
-      <li>Tap <b>Solve</b> any time to guess the whole answer. A wrong solve costs <b>1 life</b>.</li>
-      <li>Fill in every tile or solve it to win. Your score is the lives you used, so <b>lower is better</b>.</li>
+      <li><b>Vowels</b> (A E I O U) always cost <b>1 life</b>, right or wrong. You can't buy one with your last life.</li>
+      <li><b>Solve</b> at any time. A wrong solve costs <b>2 lives</b>, so guess with care.</li>
+      <li><b>Points:</b> Squire 100, Knight 200, Sage 300. You get up to <b>3×</b> that for solving while tiles are still hidden, plus 10 per life left, all multiplied by your <b>streak</b>.</li>
     </ul>
-    <div class="ex" id="exTiles"></div>
-    <p class="hintline">Green = consonant hit · Gold = bought vowel. Your physical keyboard works too: type letters, press Enter to solve.</p>
-    <div style="height:14px"></div>
-    <button class="btn" data-close>Let's play</button>
+    <h3>Two ways to play</h3>
+    <ul>
+      <li><b>Daily Riddle:</b> one shared riddle a day with 6 lives. Squire on Mondays, Knight Tuesday to Thursday, Sage Friday to Sunday. Share thy result.</li>
+      <li><b>The Gauntlet:</b> endless riddles with lives carried over. A solve heals 1 life and a flawless solve heals 2, up to 9. <b>Yield</b> skips a riddle for 1 life.</li>
+    </ul>
+    <p class="hintline">Points become gold for the Armory: new skins and more. Your keyboard works too: type letters, press Enter to solve.</p>
+    <div style="height:12px"></div>
+    <button class="btn seal" data-close>Begin</button>
   </div>
 </div>
 
-<div class="overlay" id="solveModal" role="dialog" aria-modal="true">
+<div class="overlay" id="solveModal" role="dialog" aria-modal="true" aria-labelledby="solveTitle">
   <div class="modal">
     <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-    <h2>Solve the riddle</h2>
+    <h2 id="solveTitle">Speak thy answer</h2>
     <p class="hintline" id="solveHint"></p>
     <form id="solveForm" autocomplete="off">
       <input id="solveInput" type="text" autocapitalize="characters" autocorrect="off" spellcheck="false" maxlength="40" aria-label="Your answer">
-      <button class="btn" type="submit">Submit guess</button>
+      <button class="btn seal" type="submit">Submit answer</button>
     </form>
   </div>
 </div>
@@ -158,354 +87,60 @@ main{width:100%;max-width:560px;flex:1;display:flex;flex-direction:column;paddin
   <div class="modal">
     <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
     <div class="result" id="result"></div>
-    <h3>Statistics</h3>
+    <h3>Daily statistics</h3>
     <div class="stats" id="stats"></div>
     <h3>Lives used</h3>
     <div class="dist" id="dist"></div>
     <div class="foot" id="foot">
       <div class="cd"><small>Next riddle</small><b id="countdown">--:--:--</b></div>
-      <button class="btn" id="shareBtn" style="flex:1">Share 🧩</button>
+      <button class="btn seal" id="shareBtn" style="flex:1">Share</button>
     </div>
+    <button class="btn ghost" id="toGauntlet">Keep playing: the Gauntlet ⚔</button>
   </div>
 </div>
-<div class="toast" id="toast"></div>
 
+<div class="overlay" id="runModal" role="dialog" aria-modal="true" aria-labelledby="runTitle">
+  <div class="modal">
+    <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="result">
+      <h2 id="runTitle">Thy run is ended</h2>
+      <p class="hintline" id="runAnswer"></p>
+      <div class="bigscore" id="runFinal">0</div>
+      <p class="hintline" id="runSummary"></p>
+      <p class="rankline" id="runRank"></p>
+    </div>
+    <form id="nameForm" autocomplete="off">
+      <h3>Inscribe thy name</h3>
+      <div class="namerow"><input id="nameInput" maxlength="14" placeholder="Thy name" aria-label="Your name for the Hall of Fame"><button class="btn seal" type="submit" id="nameSubmit">Inscribe</button></div>
+    </form>
+    <div class="foot"><button class="btn ghost" id="runShare" style="flex:1">Share</button><button class="btn seal" id="runAgain" style="flex:1.3">Run again</button></div>
+  </div>
+</div>
+
+<div class="overlay" id="hallModal" role="dialog" aria-modal="true" aria-labelledby="hallTitle">
+  <div class="modal">
+    <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2 id="hallTitle">Hall of Fame</h2>
+    <div class="subtabs" role="tablist"><button class="subtab" data-hall="gauntlet">Gauntlet</button><button class="subtab" data-hall="daily">Daily</button><button class="subtab" data-hall="records">Records</button></div>
+    <div id="hallBody"></div>
+    <p class="hintline" id="hallNote">Kept on this device. A realm-wide leaderboard is coming.</p>
+  </div>
+</div>
+
+<div class="overlay" id="shopModal" role="dialog" aria-modal="true" aria-labelledby="shopTitle">
+  <div class="modal">
+    <button class="icon-btn close" data-close aria-label="Close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h2 id="shopTitle">The Armory</h2>
+    <p class="hintline">Spend gold from thy solves. Thy purse holds <b class="shopGold">0</b> gold.</p>
+    <div class="shop" id="shopList"></div>
+  </div>
+</div>
+
+<div class="pop" id="pop" aria-hidden="true"></div>
+<div class="toast" id="toast" role="status"></div>
 <script>
-(() => {
-"use strict";
-const MAX = 6;
-const VOWELS = new Set("AEIOU");
-// [riddle, answer]
-const BANK = [
-["I have keys but open no locks, a space but no room, and you can enter but never go inside.","KEYBOARD"],
-["The more of me you take, the more of me you leave behind.","FOOTSTEPS"],
-["I have cities without houses, forests without trees, and rivers without a drop of water.","MAP"],
-["I have a neck but no head, and I wear a cap.","BOTTLE"],
-["I'm tall when I'm young and short when I'm old, and I cry as I burn.","CANDLE"],
-["What gets wetter the more it dries?","TOWEL"],
-["I have a face and two hands, but I can't clap or smile.","CLOCK"],
-["I can travel around the world while staying in one corner.","STAMP"],
-["I have one eye but cannot see, and I trail a thread behind me.","NEEDLE"],
-["I must be broken before anyone can use me.","EGG"],
-["I follow you all day, copy every move, and vanish the moment the lights go out.","SHADOW"],
-["It goes up every year but never comes down.","AGE"],
-["I have plenty of teeth but I never bite. I just tidy your hair.","COMB"],
-["You can catch me but you can't throw me. I usually come with sniffles.","COLD"],
-["I'm full of holes, yet I still hold water.","SPONGE"],
-["I have one head, one foot and four legs, and you visit me every night.","BED"],
-["The more of me there is, the less you can see.","DARKNESS"],
-["It belongs to you, but other people use it far more than you do.","NAME"],
-["I run but never walk, have a mouth but never talk, and have a bed but never sleep.","RIVER"],
-["I can fill a room but take up no space at all.","LIGHT"],
-["If you have me, you want to share me. Once you share me, you no longer have me.","SECRET"],
-["I have a thumb and four fingers, but I'm not alive.","GLOVE"],
-["I'm full of words but never speak, and I have a spine but no bones.","BOOK"],
-["I ring but have no finger, and I answer without knowing anything.","TELEPHONE"],
-["Some months have thirty days, some have thirty-one. How many have twenty-eight?","ALL OF THEM"],
-["I have four legs but never walk, and dinner is served on my back.","TABLE"],
-["Forward I am heavy, but backward I am not.","TON"],
-["This invention lets you look straight through a wall.","WINDOW"],
-["I pass through cities and fields, yet I never move an inch.","ROAD"],
-["Which word is spelled wrong in every dictionary?","WRONG"],
-["I shave many times a day, yet my beard stays exactly the same.","BARBER"],
-["What kind of band never plays any music, but holds things together?","RUBBER BAND"],
-["I have a head and a tail but no body, and I'm often tossed to settle arguments.","COIN"],
-["It's always in front of you, but you can never see it.","FUTURE"],
-["You can break me without ever touching me, just by not following through.","PROMISE"],
-["The more you take away from me, the bigger I get.","HOLE"],
-["I'm lighter than a feather, yet the strongest person can't hold me for more than a few minutes.","BREATH"],
-["I have 88 keys but can't open a single door.","PIANO"],
-["I have bark but no bite, rings but no jewelry.","TREE"],
-["Which building has the most stories?","LIBRARY"],
-["I can be cracked, made, told and played.","JOKE"],
-["What comes once in a minute, twice in a moment, but never in a thousand years?","THE LETTER M"],
-["I start with T, end with T, and have T in me.","TEAPOT"],
-["I'm best when long and kept to yourself. Share me and I'm worthless; forget me and you're locked out.","PASSWORD"],
-["I have a mouse but no cheese, windows but no glass, and I crash without moving.","COMPUTER"],
-["What word becomes shorter when you add two letters to it?","SHORT"],
-["I have a head but no brain. Strike me and I lose my temper.","MATCH"],
-["What runs all winter and smells all year?","NOSE"],
-["You can serve me, but you'd never eat me.","TENNIS BALL"],
-["What goes up when the rain comes down?","UMBRELLA"],
-["In me, yesterday comes after today, and tomorrow sits in the middle.","DICTIONARY"],
-["Feed me and I grow, give me a drink and I die.","FIRE"],
-["I have lids and lashes, but I'm neither a box nor a whip.","EYE"],
-["What do you call a bear with no teeth?","GUMMY BEAR"],
-["I have a tongue but can't taste, and laces but no frills. I go everywhere you go.","SHOE"],
-["What has four wheels and flies?","GARBAGE TRUCK"],
-["What kind of room has no doors, no windows and no walls?","MUSHROOM"],
-["I'm so fragile that just saying my name breaks me.","SILENCE"],
-["I can't talk, but I always answer when you speak to me.","ECHO"],
-["I have lots of eyes but can't see a thing. Mash me, fry me, bake me.","POTATO"],
-["I'm black when I'm clean and white when I'm dirty.","CHALKBOARD"],
-["I go all the way around the yard without ever moving.","FENCE"],
-["I go up and down all day, yet I never move.","STAIRS"],
-["I have a bottom at the top of me.","LEG"],
-["What can you hold in your right hand but never in your left?","LEFT ELBOW"],
-["I have a home page but no house, and people surf me without getting wet.","INTERNET"],
-["I'm a bird that's always out of breath.","PUFFIN"],
-["I taste everything you eat, yet I'm never swallowed.","TONGUE"],
-["Without wings I fly, without eyes I cry, and I'm never quite the same shape twice.","CLOUD"],
-["I'm always coming but I never arrive. The moment I do, I change my name.","TOMORROW"]
-];
-
-// ---------- deterministic order ----------
-function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-const ORDER = BANK.map((_,i)=>i);
-(function shuffle(){const r=mulberry32(0x52495454);for(let i=ORDER.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ORDER[i],ORDER[j]]=[ORDER[j],ORDER[i]];}})();
-
-function dayNumberFor(d){return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(2026,0,1))/86400000)+1;}
-const params = new URLSearchParams(location.search);
-const devDay = parseInt(params.get("day"),10);
-const DEV = Number.isFinite(devDay);
-const DAY = DEV ? devDay : dayNumberFor(new Date());
-const NS = DEV ? "rittel-dev:" : "rittel:";
-if (DEV && params.has("reset")) { Object.keys(localStorage).filter(k=>k.startsWith(NS)).forEach(k=>localStorage.removeItem(k)); params.delete("reset"); try{history.replaceState(null,"","?"+params.toString())}catch(e){} }
-const idx = ORDER[((DAY-1)%ORDER.length+ORDER.length)%ORDER.length];
-const [RIDDLE, ANSWER] = BANK[idx];
-const LETTERS = new Set(ANSWER.replace(/[^A-Z]/g,""));
-const norm = s => s.toUpperCase().replace(/[^A-Z]/g,"");
-
-// ---------- storage ----------
-const store = {
-  get(k,d){try{const v=localStorage.getItem(NS+k);return v?JSON.parse(v):d}catch(e){return d}},
-  set(k,v){try{localStorage.setItem(NS+k,JSON.stringify(v))}catch(e){}}
-};
-let state = store.get("state",null);
-if (!state || state.day !== DAY) state = {day:DAY,guessed:[],strikes:0,history:[],status:"playing",recorded:false};
-let stats = store.get("stats",{played:0,wins:0,streak:0,maxStreak:0,lastWon:null,dist:[0,0,0,0,0,0],losses:0});
-const save = () => store.set("state",state);
-
-// ---------- DOM ----------
-const $ = id => document.getElementById(id);
-const board=$("board"), kb=$("kb"), msg=$("msg"), livesEl=$("lives");
-$("dayLabel").innerHTML = "Riddle #"+DAY + (DEV?'<span class="dev">DEV</span>':"");
-$("riddle").textContent = RIDDLE;
-const tiles = []; // {el, ch}
-
-function buildBoard(){
-  board.innerHTML="";
-  ANSWER.split(" ").forEach(w=>{
-    const wd=document.createElement("div");wd.className="word";
-    for(const ch of w){
-      if(/[A-Z]/.test(ch)){
-        const t=document.createElement("div");t.className="tile"+(VOWELS.has(ch)?" v":"");
-        t.innerHTML='<div class="in"><div class="face front"></div><div class="face back">'+ch+'</div></div>';
-        t.setAttribute("aria-label","blank");
-        wd.appendChild(t);tiles.push({el:t,ch});
-      } else {const p=document.createElement("div");p.className="punct";p.textContent=ch;wd.appendChild(p);}
-    }
-    board.appendChild(wd);
-  });
-  sizeTiles();
-}
-function sizeTiles(){
-  const words=ANSWER.split(" ");
-  const longest=Math.max(...words.map(w=>w.length));
-  const total=ANSWER.length;
-  const W=Math.min(board.clientWidth||window.innerWidth-28,560);
-  const fit=n=>Math.floor((W-5*(n-1))/n);
-  // try one line, otherwise size for the longest word
-  let ts=fit(total+ (words.length-1)*2);
-  if(ts<34) ts=fit(longest);
-  ts=Math.max(22,Math.min(50,ts));
-  board.style.setProperty("--ts",ts+"px");
-}
-window.addEventListener("resize",sizeTiles);
-
-const ROWS=["QWERTYUIOP","ASDFGHJKL","ZXCVBNM"];
-const keyEls={};
-function buildKeyboard(){
-  ROWS.forEach((r,i)=>{
-    const row=document.createElement("div");row.className="row";
-    for(const ch of r){
-      const b=document.createElement("button");b.className="key"+(VOWELS.has(ch)?" vowel":"");b.textContent=ch;b.dataset.k=ch;
-      b.setAttribute("aria-label",ch+(VOWELS.has(ch)?" (vowel, costs 1 life)":""));
-      b.addEventListener("click",()=>guess(ch));row.appendChild(b);keyEls[ch]=b;
-    }
-    kb.appendChild(row);
-  });
-  const row=document.createElement("div");row.className="row";
-  const s=document.createElement("button");s.className="key wide";s.id="solveBtn";s.textContent="SOLVE";
-  s.addEventListener("click",openSolve);row.appendChild(s);kb.appendChild(row);
-  const lg=document.createElement("div");lg.className="legend";lg.innerHTML='Consonants free if right · <b>vowels cost 1 life</b> · wrong = 1 life';kb.appendChild(lg);
-}
-
-function renderLives(){
-  livesEl.innerHTML="";
-  for(let i=0;i<MAX;i++){const p=document.createElement("div");p.className="pip"+(i>=MAX-state.strikes?" lost":"");livesEl.appendChild(p);}
-  livesEl.classList.toggle("danger",MAX-state.strikes<=1);
-  livesEl.setAttribute("aria-label",(MAX-state.strikes)+" lives left");
-}
-function renderKeys(){
-  const last = MAX-state.strikes<=1;
-  for(const ch in keyEls){
-    const b=keyEls[ch], g=state.guessed.includes(ch);
-    b.classList.remove("hit","vhit","miss","locked");
-    if(g) b.classList.add(LETTERS.has(ch)?(VOWELS.has(ch)?"vhit":"hit"):"miss");
-    const lockV = !g && VOWELS.has(ch) && last && state.status==="playing";
-    if(lockV) b.classList.add("locked");
-    b.disabled = g || state.status!=="playing";
-  }
-  $("solveBtn").disabled = state.status!=="playing";
-  $("solveBtn").textContent = state.status==="playing"?"SOLVE":(state.status==="won"?"SOLVED ✓":"OUT OF LIVES");
-}
-function revealTiles(animate, onlyCh){
-  let n=0;
-  tiles.forEach(t=>{
-    const show = state.status!=="playing" || state.guessed.includes(t.ch);
-    if(onlyCh && t.ch!==onlyCh) return;
-    if(show && !t.el.classList.contains("rev")){
-      if(state.status==="lost" && !state.guessed.includes(t.ch)) t.el.classList.add("missed");
-      const d = animate ? n++*90 : 0;
-      if(!animate) t.el.querySelector(".in").style.transition="none";
-      setTimeout(()=>{t.el.classList.add("rev");t.el.setAttribute("aria-label",t.ch);},d);
-      if(!animate) requestAnimationFrame(()=>requestAnimationFrame(()=>t.el.querySelector(".in").style.transition=""));
-    }
-  });
-  return n*90;
-}
-function setMsg(t){msg.textContent=t||"";}
-function toast(t,ms=1600){const e=$("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>e.classList.remove("on"),ms);}
-function shake(){board.classList.remove("shake");void board.offsetWidth;board.classList.add("shake");}
-const allRevealed=()=>[...LETTERS].every(c=>state.guessed.includes(c));
-
-function guess(ch){
-  if(state.status!=="playing"||state.guessed.includes(ch))return;
-  const isV=VOWELS.has(ch), hit=LETTERS.has(ch);
-  if(isV && MAX-state.strikes<=1){toast("Last life — you can't buy a vowel now");shake();return;}
-  state.guessed.push(ch);
-  if(isV){state.strikes++;state.history.push(hit?"V":"X");}
-  else if(!hit){state.strikes++;state.history.push("X");}
-  else state.history.push("H");
-  const count=tiles.filter(t=>t.ch===ch).length;
-  if(hit) setMsg(count+" × "+ch+(isV?" (bought, −1 life)":""));
-  else {setMsg("No "+ch+" — −1 life");shake();}
-  let delay = hit?revealTiles(true,ch):0;
-  check(delay);
-}
-function solve(text){
-  if(state.status!=="playing")return false;
-  const g=norm(text);if(!g)return false;
-  if(g===norm(ANSWER)){state.history.push("S");state.status="won";finish(true);return true;}
-  state.strikes++;state.history.push("W");
-  setMsg("“"+text.trim().toUpperCase()+"” isn't it — −1 life");shake();
-  check(0);return false;
-}
-function check(delay){
-  if(allRevealed()){state.status="won";}
-  else if(state.strikes>=MAX){state.status="lost";}
-  if(state.status!=="playing") finish(false,delay); else {save();renderLives();renderKeys();}
-}
-function finish(viaSolve,delay=0){
-  record();save();renderLives();renderKeys();
-  setTimeout(()=>{
-    const d=revealTiles(true);
-    if(state.status==="won"){
-      setMsg(["Genius!","Brilliant!","Sharp!","Nice!","Solid!","Phew!"][Math.min(state.strikes,5)]);
-      setTimeout(()=>tiles.forEach((t,i)=>{t.el.style.setProperty("--d",(i*60)+"ms");t.el.classList.add("win")}),d+500);
-    } else setMsg("Out of lives. The answer was "+ANSWER+".");
-    setTimeout(openStats,d+1300);
-  },delay+200);
-}
-function record(){
-  if(state.recorded)return;
-  state.recorded=true;stats.played++;
-  if(state.status==="won"){
-    stats.wins++;stats.dist[Math.min(state.strikes,5)]++;
-    stats.streak = (stats.lastWon===DAY-1)?stats.streak+1:1;
-    stats.lastWon=DAY;stats.maxStreak=Math.max(stats.maxStreak,stats.streak);
-  } else {stats.losses=(stats.losses||0)+1;stats.streak=0;}
-  store.set("stats",stats);
-}
-// break streak if a day was skipped
-if(stats.lastWon!==null && stats.lastWon<DAY-1 && stats.streak>0 && !DEV){stats.streak=0;store.set("stats",stats);}
-
-// ---------- modals ----------
-function open(id){$(id).classList.add("open");}
-function close(id){$(id).classList.remove("open");if(id==="helpModal")store.set("seen",true);}
-document.querySelectorAll(".overlay").forEach(o=>{
-  o.addEventListener("click",e=>{if(e.target===o||e.target.closest("[data-close]"))close(o.id);});
-});
-$("helpBtn").onclick=()=>open("helpModal");
-$("statsBtn").onclick=openStats;
-function anyOpen(){return document.querySelector(".overlay.open");}
-
-function openSolve(){
-  if(state.status!=="playing")return;
-  const words=ANSWER.split(" ").map(w=>w.length);
-  $("solveHint").textContent=(words.length>1?words.length+" words ("+words.join(", ")+" letters)":words[0]+" letters")+" · a wrong guess costs 1 life · "+(MAX-state.strikes)+" left";
-  const inp=$("solveInput");
-  inp.value="";inp.placeholder=tiles.length?ANSWER.split(" ").map(w=>[...w].map(c=>/[A-Z]/.test(c)&&state.guessed.includes(c)?c:"_").join("")).join(" "):"";
-  open("solveModal");setTimeout(()=>inp.focus(),50);
-}
-$("solveForm").addEventListener("submit",e=>{
-  e.preventDefault();const v=$("solveInput").value;if(!norm(v)){$("solveInput").focus();return;}
-  close("solveModal");solve(v);
-});
-
-function emojiRow(){return state.history.map(h=>({H:"🟩",V:"🟨",X:"⬛",S:"⭐",W:"🟥"})[h]).join("");}
-function shareText(){
-  const sc = state.status==="won"?state.strikes:"X";
-  return "Rittel #"+DAY+" 🧩 "+sc+"/"+MAX+"\n"+emojiRow();
-}
-function openStats(){
-  const r=$("result");
-  if(state.status==="playing"){r.innerHTML='<h2>Your stats</h2><p class="hintline">Today\'s riddle is still in progress.</p>';$("foot").style.display="none";}
-  else{
-    const won=state.status==="won";
-    r.innerHTML='<h2>'+(won?"Solved! 🎉":"So close 😵")+'</h2><div class="hintline"></div><div class="ans"></div><div class="emo"></div><p class="hintline"></p>';
-    r.querySelector(".hintline").textContent=won?("You used "+state.strikes+" of "+MAX+" lives"):"You ran out of lives";
-    r.querySelector(".ans").textContent=ANSWER;
-    r.querySelector(".emo").textContent=emojiRow();
-    r.querySelector("p.hintline").textContent="“"+RIDDLE+"”";
-    $("foot").style.display="";
-  }
-  const pct=stats.played?Math.round(stats.wins/stats.played*100):0;
-  $("stats").innerHTML=[[stats.played,"Played"],[pct,"Win %"],[stats.streak,"Current streak"],[stats.maxStreak,"Max streak"]].map(([v,l])=>'<div><b>'+v+'</b><span>'+l+'</span></div>').join("");
-  const mx=Math.max(1,...stats.dist,stats.losses||0);
-  const rows=stats.dist.map((v,i)=>[String(i),v,state.status==="won"&&state.strikes===i]).concat([["X",stats.losses||0,state.status==="lost"]]);
-  $("dist").innerHTML=rows.map(([l,v,me])=>'<div class="bar'+(me?" me":"")+'"><span class="lbl">'+l+'</span><span class="fill" style="width:'+Math.max(7,Math.round(v/mx*100))+'%">'+v+'</span></div>').join("");
-  open("statsModal");
-}
-function tick(){
-  const now=new Date(),t=new Date(now.getFullYear(),now.getMonth(),now.getDate()+1);
-  let s=Math.max(0,Math.floor((t-now)/1000));const p=n=>String(n).padStart(2,"0");
-  $("countdown").textContent=p(Math.floor(s/3600))+":"+p(Math.floor(s%3600/60))+":"+p(s%60);
-  if(!DEV && dayNumberFor(now)!==DAY && state.status!=="playing") $("countdown").textContent="Ready — refresh!";
-}
-setInterval(tick,1000);tick();
-$("shareBtn").onclick=async()=>{
-  const txt=shareText();
-  try{await navigator.clipboard.writeText(txt);toast("Copied result to clipboard");}
-  catch(e){
-    const ta=document.createElement("textarea");ta.value=txt;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();
-    let ok=false;try{ok=document.execCommand("copy")}catch(_){}
-    ta.remove();toast(ok?"Copied result to clipboard":txt,ok?1600:4000);
-  }
-};
-
-// physical keyboard
-document.addEventListener("keydown",e=>{
-  if(e.metaKey||e.ctrlKey||e.altKey)return;
-  const o=anyOpen();
-  if(e.key==="Escape"&&o){close(o.id);return;}
-  if(o)return;
-  if(/^[a-zA-Z]$/.test(e.key)){e.preventDefault();guess(e.key.toUpperCase());}
-  else if(e.key==="Enter"){e.preventDefault();openSolve();}
-});
-
-// help example tiles
-(function(){const ex=$("exTiles");"RITTEL".split("").forEach((c,i)=>{const t=document.createElement("div");t.className="tile"+(VOWELS.has(c)?" v":"")+(["R","T","I"].includes(c)?" rev":"");t.innerHTML='<div class="in"><div class="face front"></div><div class="face back">'+c+'</div></div>';ex.appendChild(t);});})();
-
-// init
-buildBoard();buildKeyboard();renderLives();renderKeys();revealTiles(false);
-if(state.status!=="playing"){setMsg(state.status==="won"?"Solved! Come back tomorrow for a new riddle.":"Out of lives. The answer was "+ANSWER+".");setTimeout(openStats,400);}
-else if(state.history.length) setMsg("Welcome back — "+(MAX-state.strikes)+" lives left.");
-if(!store.get("seen",false)) open("helpModal");
-// test hook (read-only info)
-window.__rittel={day:DAY,answer:()=>ANSWER,state:()=>JSON.parse(JSON.stringify(state)),bankSize:BANK.length};
-})();
+{{RIDDLES}}
+{{GAME}}
 </script>
 </body>
 </html>
